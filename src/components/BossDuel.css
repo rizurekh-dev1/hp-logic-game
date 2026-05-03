@@ -161,30 +161,31 @@
 .rune-triangle-boss {
   width: 0;
   height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 25px solid #1a1a1a;
+  border-left: 25px solid transparent; /* Matched to Level 4 */
+  border-right: 25px solid transparent; /* Matched to Level 4 */
+  border-bottom: 45px solid #0f3460; /* Matched to Level 4 */
+  filter: drop-shadow(0 0 2px rgba(0, 229, 255, 0.4));
   border-bottom-color: #050a14;
 }
 
 .dots-container-boss {
   position: absolute;
-  top: 60%;
+  top: 65%; /* Adjusted for larger triangle */
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  gap: 2px;
+  gap: 4px;
   flex-wrap: wrap;
-  width: 18px;
+  width: 32px; /* Matched to Level 4 */
   justify-content: center;
 }
 
 .rune-dot-boss {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   background: #00e5ff;
   border-radius: 50%;
-  box-shadow: 0 0 3px #00e5ff;
+  box-shadow: 0 0 5px #00e5ff;
 }
 
 .duel-feedback {
