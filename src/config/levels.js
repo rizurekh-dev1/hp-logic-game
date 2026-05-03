@@ -63,25 +63,26 @@ export const LEVELS = [
     title: "Snape's Potion Riddle",
     subtitle: "Deduction & Fire",
     narrative:
-      "A wall of black fire blocks the way! Seven bottles sit on a shelf, but only one will let you pass. " +
-      "Use Hermione's logic to find the Potion of Protection.",
+      "A wall of black fire blocks the way! You must choose the correct potion to live and pass through the flames. " +
+      "Choose wrongly, and you shall be trapped here forever! Use your logic to survive.",
     riddle: {
       clues: [
-        "1. The Purple bottle is at the very end of the line (far right).",
-        "2. The Safe Potion is exactly in the middle of the line.",
-        "3. The Red bottle is poison—it sits directly next to the Purple one.",
-        "4. The Blue and Green bottles are best friends—they sit next to each other.",
-        "5. The Yellow bottle is the only one left!"
+        "1. Imagine 5 bottles in a line on a stone shelf.",
+        "2. The Purple bottle is at the very end of the line (far right).",
+        "3. The Safe Potion is the one exactly in the middle of the line.",
+        "4. The Red bottle is poison—it sits directly next to the Purple one.",
+        "5. The Blue and Green bottles sit next to each other at the other end.",
+        "6. The Yellow bottle is the only one left!"
       ],
       bottles: [
-        { id: 'blue', color: '#00e5ff', label: 'Blue' },
-        { id: 'green', color: '#00ff88', label: 'Green' },
-        { id: 'yellow', color: '#ffd700', label: 'Yellow' },
-        { id: 'red', color: '#ff4444', label: 'Red' },
-        { id: 'purple', color: '#a020f0', label: 'Purple' }
+        { id: 'blue', color: '#00e5ff', label: 'Option A' },
+        { id: 'red', color: '#ff4444', label: 'Option B' },
+        { id: 'yellow', color: '#ffd700', label: 'Option C' },
+        { id: 'purple', color: '#a020f0', label: 'Option D' },
+        { id: 'green', color: '#00ff88', label: 'Option E' }
       ],
       solution: 'yellow',
-      failureMessage: "❌ That was poison! Luckily, Hermione had an antidote. Check the clues again."
+      failureMessage: "💀 The flames consume you! That was the wrong potion. Luckily, time turns back... Try again!"
     },
     completionWord: 'PROTEGO',
     completionMessage: "The flames part as you drink the Yellow potion! Your logic is as sharp as Hermione's.",

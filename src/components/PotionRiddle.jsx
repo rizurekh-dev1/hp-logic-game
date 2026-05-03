@@ -49,45 +49,38 @@ export function PotionRiddle({ level, onComplete }) {
         </ul>
       </motion.div>
 
-      {/* The Shelf */}
-      <div className="potion-shelf">
-        <div className="shelf-wood" />
-        <div className="bottles-row">
+      {/* The Choice Grid */}
+      <div className="choice-container">
+        <h4 className="choice-header">Identify the Safe Potion Color:</h4>
+        <div className="options-grid">
           {riddle.bottles.map((bottle) => (
-            <motion.div
+            <motion.button
               key={bottle.id}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => handleSelect(bottle.id)}
-              className={`potion-bottle ${selectedId === bottle.id ? 'selected' : ''}`}
+              className={`option-btn ${selectedId === bottle.id ? 'selected' : ''}`}
             >
+              <div className="option-label">{bottle.label}</div>
               <div 
-                className="bottle-fluid" 
-                style={{ backgroundColor: bottle.color }} 
+                className="color-orb" 
+                style={{ backgroundColor: bottle.color, boxShadow: `0 0 15px ${bottle.color}44` }} 
               />
-              <div className="bottle-glass" />
-              {selectedId === bottle.id && (
-                <motion.div 
-                  layoutId="glow"
-                  className="bottle-glow"
-                  style={{ boxShadow: `0 0 20px ${bottle.color}` }}
-                />
-              )}
-            </motion.div>
+            </motion.button>
           ))}
         </div>
       </div>
 
       {/* Action Button */}
       <div className="action-area">
-        <p className="selected-hint">
-          {selectedId ? `You've chosen the ${selectedId} potion...` : 'Carefully inspect the bottles...'}
+        <p className="warning-text">
+          ⚠️ Choose carefully. One leads to safety, the others to your doom!
         </p>
         <button
           className={`magic-button ${!selectedId ? 'disabled' : ''} ${status}`}
           onClick={handleDrink}
           disabled={!selectedId || status === 'success'}
         >
-          {status === 'success' ? 'Portal Opening...' : 'Drink Potion'}
+          {status === 'success' ? 'Portal Opening...' : 'Drink Selected Potion'}
         </button>
       </div>
 
