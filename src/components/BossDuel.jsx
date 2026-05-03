@@ -18,30 +18,37 @@ function Rune({ rotation, dots }) {
 }
 
 export function BossDuel({ level, onComplete }) {
+  const { duel } = level;
+  const totalPhases = 2; // Can be derived from Object.keys(duel).length
+  
   const [phase, setPhase] = useState(1);
   const [bossHealth, setBossHealth] = useState(100);
   const [status, setStatus] = useState('idle');
   const [selectedId, setSelectedId] = useState(null);
-  
-  const { duel } = level;
+  const [feedback, setFeedback] = useState('');
 
   const handlePhase1Select = (option) => {
     if (status !== 'idle') return;
     
     if (option.isCorrect) {
       setStatus('correct');
-      setBossHealth(50);
+      setFeedback(duel.phase1.successMessage);
+      setBossHealth(prev => Math.max(0, prev - (100 / totalPhases)));
       trackEvent('boss_phase_1_complete');
       if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
       setTimeout(() => {
         setPhase(2);
         setStatus('idle');
-        setSelectedId(null);
+        setFeedback('');
       }, 1500);
     } else {
       setStatus('error');
+      setFeedback(duel.phase1.failureMessage);
       if (navigator.vibrate) navigator.vibrate(200);
-      setTimeout(() => setStatus('idle'), 1000);
+      setTimeout(() => {
+        setStatus('idle');
+        setFeedback('');
+      }, 1200);
     }
   };
 
@@ -51,15 +58,18 @@ export function BossDuel({ level, onComplete }) {
 
     if (option.isCorrect) {
       setStatus('correct');
-      setBossHealth(0);
+      setFeedback(duel.phase2.successMessage);
+      setBossHealth(prev => Math.max(0, prev - (100 / totalPhases)));
       trackEvent('boss_phase_2_complete');
       if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
       setTimeout(onComplete, 2000);
     } else {
       setStatus('error');
+      setFeedback(duel.phase2.failureMessage);
       if (navigator.vibrate) navigator.vibrate(200);
       setTimeout(() => {
         setStatus('idle');
+        setFeedback('');
         setSelectedId(null);
       }, 1200);
     }
@@ -73,8 +83,10 @@ export function BossDuel({ level, onComplete }) {
         <div className="health-container">
           <motion.div 
             className="health-bar" 
-            animate={{ width: `${bossHealth}%` }}
-            style={{ backgroundColor: bossHealth > 50 ? '#4caf50' : '#f44336' }}
+            animate={{ 
+              width: `${bossHealth}%`,
+              backgroundColor: bossHealth > 60 ? '#4caf50' : bossHealth > 30 ? '#ff9800' : '#f44336'
+            }}
           />
         </div>
       </div>
@@ -142,14 +154,14 @@ export function BossDuel({ level, onComplete }) {
       </div>
 
       <AnimatePresence>
-        {status === 'error' && (
+        {feedback && (
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="duel-feedback error"
+            className={`duel-feedback ${status}`}
           >
-            {phase === 1 ? "The spell breaks through! Try another reflection." : duel.phase2.failureMessage}
+            {feedback}
           </motion.div>
         )}
       </AnimatePresence>

@@ -138,7 +138,9 @@ export const LEVELS = [
           { id: 'p1-opt-1', rotation: 90, dots: 3, isCorrect: true },
           { id: 'p1-opt-2', rotation: 90, dots: 2, isCorrect: false },
           { id: 'p1-opt-3', rotation: 270, dots: 3, isCorrect: false }
-        ]
+        ],
+        successMessage: "Excellent! The spell reflects back at Quirrell!",
+        failureMessage: "The spell breaks through! You must pick the perfect reflection."
       },
       phase2: {
         clue: "The Stone is not on the left. The pedestal on the right is trapped. Where is it?",
@@ -147,7 +149,8 @@ export const LEVELS = [
           { id: 'p2-middle', label: 'Middle Pedestal', isCorrect: true },
           { id: 'p2-right', label: 'Right Pedestal', isCorrect: false }
         ],
-        failureMessage: "A fake stone! The illusions are tricky. Try again!"
+        successMessage: "You've found the true Stone!",
+        failureMessage: "💀 A fake stone! The illusions are tricky. Try again!"
       }
     },
     completionWord: 'VICTORY',
