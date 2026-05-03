@@ -1,6 +1,7 @@
 import { useReducer, useEffect } from 'react';
 import './App.css';
 import { motion, AnimatePresence } from 'framer-motion';
+import { trackEvent } from './analytics.js';
 
 const GAME_STATES = {
   INITIAL_LOAD: 'INITIAL_LOAD',
@@ -14,7 +15,7 @@ const GAME_STATES = {
 const initialState = {
   currentState: GAME_STATES.INITIAL_LOAD,
   currentLevelIndex: 0,
-  totalLevels: 1, // Start with 1 puzzle
+  totalLevels: 1, // Start with 1 puzzle — increment as we add more
   unlockedLevels: 0,
 };
 
@@ -29,10 +30,10 @@ function gameReducer(state, action) {
     case 'PUZZLE_SOLVED':
       return { ...state, currentState: GAME_STATES.LEVEL_SUCCESS };
     case 'NEXT_LEVEL':
-      return { 
-        ...state, 
+      return {
+        ...state,
         currentState: GAME_STATES.NEXT_LEVEL_TRANSITION,
-        currentLevelIndex: state.currentLevelIndex + 1 
+        currentLevelIndex: state.currentLevelIndex + 1
       };
     case 'TRANSITION_COMPLETE':
       return { ...state, currentState: GAME_STATES.LEVEL_INTRO };
@@ -44,21 +45,44 @@ function gameReducer(state, action) {
 function App() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
+  // Track every state transition automatically
+  useEffect(() => {
+    trackEvent('game_state_changed', {
+      state: state.currentState,
+      level: state.currentLevelIndex + 1,
+    });
+  }, [state.currentState]);
+
   // Simulate asset preloading
   useEffect(() => {
     if (state.currentState === GAME_STATES.INITIAL_LOAD) {
       const timer = setTimeout(() => {
         dispatch({ type: 'ASSETS_LOADED' });
-      }, 1500); // Faux loading for now
+      }, 1500);
       return () => clearTimeout(timer);
     }
   }, [state.currentState]);
+
+  const handleTapToStart = () => {
+    trackEvent('tap_to_start', { level: state.currentLevelIndex + 1 });
+    dispatch({ type: 'START_GAME' });
+  };
+
+  const handleEnterChallenge = () => {
+    trackEvent('puzzle_started', { level: state.currentLevelIndex + 1 });
+    dispatch({ type: 'START_PUZZLE' });
+  };
+
+  const handlePuzzleSolved = () => {
+    trackEvent('puzzle_solved', { level: state.currentLevelIndex + 1 });
+    dispatch({ type: 'PUZZLE_SOLVED' });
+  };
 
   return (
     <div className="app-container">
       <AnimatePresence mode="wait">
         {state.currentState === GAME_STATES.INITIAL_LOAD && (
-          <motion.div 
+          <motion.div
             key="loading"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -71,13 +95,13 @@ function App() {
         )}
 
         {state.currentState === GAME_STATES.TAP_TO_START && (
-          <motion.div 
+          <motion.div
             key="tap-start"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="screen"
-            onClick={() => dispatch({ type: 'START_GAME' })}
+            onClick={handleTapToStart}
             style={{ cursor: 'pointer' }}
           >
             <h1 className="magic-text" style={{ color: 'var(--accent-gold)' }}>Tap to Open</h1>
@@ -86,7 +110,7 @@ function App() {
         )}
 
         {state.currentState === GAME_STATES.LEVEL_INTRO && (
-          <motion.div 
+          <motion.div
             key="intro"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -95,9 +119,9 @@ function App() {
           >
             <h2 className="magic-text">Level {state.currentLevelIndex + 1}</h2>
             <p>Harry needs your help!</p>
-            <button 
+            <button
               style={{ marginTop: '20px', padding: '10px 20px', fontSize: '18px', background: 'var(--accent-blue)', color: '#000', border: 'none', borderRadius: '8px', cursor: 'pointer', fontFamily: 'var(--font-ui)', fontWeight: 'bold' }}
-              onClick={() => dispatch({ type: 'START_PUZZLE' })}
+              onClick={handleEnterChallenge}
             >
               Enter the Challenge
             </button>
@@ -105,20 +129,20 @@ function App() {
         )}
 
         {state.currentState === GAME_STATES.PUZZLE_ACTIVE && (
-          <motion.div 
+          <motion.div
             key="puzzle"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             className="screen"
           >
-            <h2 className="magic-text">The Devil's Snare</h2>
+            <h2 className="magic-text">The Devil&apos;s Snare</h2>
             <div style={{ width: 'min(90vw, 400px)', aspectRatio: '1/1', border: '2px dashed var(--accent-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px 0' }}>
               <p>Jigsaw Puzzle Goes Here</p>
             </div>
-            <button 
+            <button
               style={{ padding: '10px 20px', fontSize: '18px', background: 'var(--accent-gold)', color: '#000', border: 'none', borderRadius: '8px', cursor: 'pointer', fontFamily: 'var(--font-ui)', fontWeight: 'bold' }}
-              onClick={() => dispatch({ type: 'PUZZLE_SOLVED' })}
+              onClick={handlePuzzleSolved}
             >
               Simulate Win
             </button>
@@ -126,7 +150,7 @@ function App() {
         )}
 
         {state.currentState === GAME_STATES.LEVEL_SUCCESS && (
-          <motion.div 
+          <motion.div
             key="success"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
