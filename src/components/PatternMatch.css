@@ -90,28 +90,29 @@
   height: 0;
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
-  border-bottom: 25px solid #00e5ff;
-  filter: drop-shadow(0 0 5px #00e5ff88);
+  border-bottom: 25px solid #0f3460; /* Darker navy base */
+  filter: drop-shadow(0 0 2px rgba(0, 229, 255, 0.4));
+  border-bottom-color: #050a14; /* Even darker for contrast */
 }
 
 .dots-container {
   position: absolute;
-  top: 50%;
+  top: 55%; /* Adjusted for triangle center */
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  gap: 2px;
+  gap: 3px;
   flex-wrap: wrap;
-  width: 20px;
+  width: 18px;
   justify-content: center;
 }
 
 .rune-dot {
-  width: 5px;
-  height: 5px;
-  background: #fff;
+  width: 6px;
+  height: 6px;
+  background: #00e5ff; /* Neon Cyan dots */
   border-radius: 50%;
-  box-shadow: 0 0 3px #fff;
+  box-shadow: 0 0 5px #00e5ff;
 }
 
 /* Options Area */
