@@ -1,0 +1,217 @@
+.boss-duel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 450px;
+  gap: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.boss-header {
+  width: 100%;
+  text-align: center;
+}
+
+.boss-name {
+  font-family: var(--font-magic);
+  color: #ff4444;
+  font-size: 18px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.4);
+}
+
+.health-container {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.health-bar {
+  height: 100%;
+  transition: width 0.5s ease-out;
+}
+
+.duel-arena {
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.duel-phase {
+  width: 100%;
+  text-align: center;
+}
+
+.phase-instruction {
+  font-family: var(--font-ui);
+  color: var(--accent-gold);
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+/* Phase 1: Mirror Duel */
+.mirror-duel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.target-rune-box {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 12px;
+  border: 2px solid #ff4444;
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.2);
+}
+
+.box-label {
+  font-size: 12px;
+  color: #ff4444;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.reflection-icon {
+  font-size: 24px;
+  color: var(--accent-blue);
+  animation: pulse 1.5s infinite;
+}
+
+.options-row-boss {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.boss-option-btn {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Phase 2: Pedestals */
+.pedestals-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.pedestal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.pedestal-stone {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle at 30% 30%, #ff4d4d, #b30000);
+  border-radius: 50% 50% 40% 40%;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+  margin-bottom: -5px;
+  z-index: 2;
+}
+
+.pedestal-base {
+  width: 60px;
+  height: 80px;
+  background: #444;
+  clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+  border-bottom: 4px solid #222;
+}
+
+.pedestal-label {
+  margin-top: 8px;
+  font-size: 11px;
+  color: white;
+  opacity: 0.7;
+}
+
+.pedestal.selected .pedestal-stone {
+  transform: translateY(-10px);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+}
+
+/* Rune Styles for Boss */
+.duel-rune {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rune-triangle-boss {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 25px solid #1a1a1a;
+  border-bottom-color: #050a14;
+}
+
+.dots-container-boss {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  width: 18px;
+  justify-content: center;
+}
+
+.rune-dot-boss {
+  width: 5px;
+  height: 5px;
+  background: #00e5ff;
+  border-radius: 50%;
+  box-shadow: 0 0 3px #00e5ff;
+}
+
+.duel-feedback {
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.duel-feedback.error {
+  color: #ff4444;
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid #ff4444;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}

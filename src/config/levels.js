@@ -121,4 +121,39 @@ export const LEVELS = [
       puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
     },
   },
+  {
+    id: 5,
+    slug: 'level-05-boss-duel',
+    type: 'BOSS_DUEL',
+    title: "The Final Confrontation",
+    subtitle: "Quirrell's Last Stand",
+    narrative:
+      "You've reached the final chamber! Professor Quirrell is trying to steal the Stone. " +
+      "Use your logic to reflect his spells and find the real Stone before he does!",
+    duel: {
+      phase1: {
+        clue: "Reflect his Rune: Pick the 90° clockwise rotation to bounce the spell back!",
+        target: { rotation: 0, dots: 3 },
+        options: [
+          { id: 'p1-opt-1', rotation: 90, dots: 3, isCorrect: true },
+          { id: 'p1-opt-2', rotation: 90, dots: 2, isCorrect: false },
+          { id: 'p1-opt-3', rotation: 270, dots: 3, isCorrect: false }
+        ]
+      },
+      phase2: {
+        clue: "The Stone is not on the left. The pedestal on the right is trapped. Where is it?",
+        options: [
+          { id: 'p2-left', label: 'Left Pedestal', isCorrect: false },
+          { id: 'p2-middle', label: 'Middle Pedestal', isCorrect: true },
+          { id: 'p2-right', label: 'Right Pedestal', isCorrect: false }
+        ],
+        failureMessage: "A fake stone! The illusions are tricky. Try again!"
+      }
+    },
+    completionWord: 'VICTORY',
+    completionMessage: "Quirrell is defeated! You've secured the Philosopher's Stone and proved your mastery of logic.",
+    assets: {
+      puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
+    },
+  },
 ];

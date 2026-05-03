@@ -6,6 +6,7 @@ import { PuzzleGame } from './components/PuzzleGame.jsx';
 import { MathChallenge } from './components/MathChallenge.jsx';
 import { PotionRiddle } from './components/PotionRiddle.jsx';
 import { PatternMatch } from './components/PatternMatch.jsx';
+import { BossDuel } from './components/BossDuel.jsx';
 import { LEVELS } from './config/levels.js';
 
 const GAME_STATES = {
@@ -265,6 +266,13 @@ function App() {
 
                 {currentLevel.type === 'PATTERN_MATCH' && (
                   <PatternMatch
+                    level={currentLevel}
+                    onComplete={handleLevelSolved}
+                  />
+                )}
+
+                {currentLevel.type === 'BOSS_DUEL' && (
+                  <BossDuel
                     level={currentLevel}
                     onComplete={handleLevelSolved}
                   />
