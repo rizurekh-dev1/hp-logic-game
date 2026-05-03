@@ -144,10 +144,24 @@
   padding: 12px;
   width: 100%;
   max-width: min(90vw, 400px);
+  max-height: 160px; /* Fixed height for vertical scroll */
+  overflow-y: auto;  /* Vertical scroll only */
   box-sizing: border-box;
   background: rgba(255,255,255,0.04);
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Vertical scrollbar styling */
+.puzzle-tray::-webkit-scrollbar {
+  width: 6px;
+}
+.puzzle-tray::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.1);
+}
+.puzzle-tray::-webkit-scrollbar-thumb {
+  background: var(--accent-blue);
+  border-radius: 10px;
 }
 
 /* ── Draggable pieces ────────────────────────────────────── */
