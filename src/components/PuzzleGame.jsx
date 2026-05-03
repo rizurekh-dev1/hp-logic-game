@@ -67,7 +67,7 @@ export function PuzzleGame({ level, onComplete }) {
   const [correctCount, setCorrectCount] = useState(() => loadSavedState(level.id, level.grid).correctCount);
   const [selectedPieceId, setSelectedPieceId] = useState(null);
   const [wrongSlotKey, setWrongSlotKey] = useState(null); 
-
+  const [isDragging, setIsDragging] = useState(false);
   // Reset state if level changes
   useEffect(() => {
     const fresh = loadSavedState(level.id, level.grid);
@@ -151,6 +151,7 @@ export function PuzzleGame({ level, onComplete }) {
       const [slotRow, slotCol] = closestSlot.split('-').map(Number);
       placePiece(piece.id, slotRow, slotCol);
     }
+    setIsDragging(false);
   }
 
   const unplacedPieces = pieces.filter(p => !p.isPlaced);
@@ -223,7 +224,7 @@ export function PuzzleGame({ level, onComplete }) {
           : 'Drag a piece or tap it to select'}
       </p>
 
-      <div className="puzzle-tray">
+      <div className="puzzle-tray" style={{ overflowY: isDragging ? 'visible' : 'auto' }}>
         {unplacedPieces.map(piece => (
           <motion.div
             key={piece.id}
@@ -231,6 +232,7 @@ export function PuzzleGame({ level, onComplete }) {
             drag
             dragMomentum={false}
             dragSnapToOrigin={true}
+            onDragStart={() => setIsDragging(true)}
             whileDrag={{ 
               scale: 1.08, 
               zIndex: 200, 
