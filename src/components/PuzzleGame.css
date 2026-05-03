@@ -144,7 +144,7 @@
   padding: 12px;
   width: 100%;
   max-width: min(90vw, 400px);
-  max-height: 160px; /* Fixed height for vertical scroll */
+  max-height: 320px; /* Doubled from 160px */
   overflow-y: auto;  /* Vertical scroll only */
   box-sizing: border-box;
   background: rgba(255,255,255,0.04);
