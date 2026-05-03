@@ -88,22 +88,22 @@
 .rune-triangle {
   width: 0;
   height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 25px solid #0f3460; /* Darker navy base */
+  border-left: 25px solid transparent; /* Increased from 15px */
+  border-right: 25px solid transparent; /* Increased from 15px */
+  border-bottom: 45px solid #0f3460; /* Increased from 25px */
   filter: drop-shadow(0 0 2px rgba(0, 229, 255, 0.4));
-  border-bottom-color: #050a14; /* Even darker for contrast */
+  border-bottom-color: #050a14;
 }
 
 .dots-container {
   position: absolute;
-  top: 55%; /* Adjusted for triangle center */
+  top: 65%; /* Adjusted for larger triangle */
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  gap: 3px;
+  gap: 4px;
   flex-wrap: wrap;
-  width: 18px;
+  width: 32px; /* Increased from 18px */
   justify-content: center;
 }
 
