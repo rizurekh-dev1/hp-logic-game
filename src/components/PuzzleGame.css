@@ -1,0 +1,126 @@
+.puzzle-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 12px 0 0;
+  box-sizing: border-box;
+  gap: 10px;
+  overflow: hidden;
+}
+
+/* ── Progress bar ────────────────────────────────────────── */
+.puzzle-progress-bar {
+  width: min(90vw, 360px);
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.puzzle-progress-fill {
+  height: 100%;
+  background: var(--accent-blue);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+.puzzle-progress-text {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Board ───────────────────────────────────────────────── */
+.puzzle-board {
+  display: grid;
+  gap: 3px;
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(0,229,255,0.2);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.puzzle-slot {
+  border: 2px dashed rgba(255,255,255,0.15);
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Slot states */
+.puzzle-slot.slot-targetable {
+  border-color: var(--accent-blue);
+  background: rgba(0,229,255,0.08);
+  animation: pulse-slot 1s infinite;
+}
+.puzzle-slot.slot-placed {
+  border-color: transparent;
+  cursor: default;
+  overflow: hidden;
+}
+.puzzle-slot.slot-wrong {
+  border-color: #ff4444;
+  background: rgba(255,68,68,0.15);
+}
+
+@keyframes pulse-slot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,229,255,0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(0,229,255,0); }
+}
+
+/* ── Placed piece (snapped into slot) ───────────────────── */
+.piece-in-slot {
+  background-repeat: no-repeat;
+  border-radius: 2px;
+}
+
+/* ── Hint text ───────────────────────────────────────────── */
+.puzzle-hint {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  min-height: 18px;
+}
+
+/* ── Tray ────────────────────────────────────────────────── */
+.puzzle-tray {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  width: 100%;
+  max-width: min(90vw, 400px);
+  box-sizing: border-box;
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ── Draggable pieces ────────────────────────────────────── */
+.puzzle-piece {
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  position: relative;
+  border: 2px solid rgba(255,255,255,0.1);
+  transition: border-color 0.2s;
+  transform: translate3d(0, 0, 0); /* force GPU layer */
+}
+.puzzle-piece:active {
+  cursor: grabbing;
+}
+.puzzle-piece.piece-selected {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(0,229,255,0.35);
+}

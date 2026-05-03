@@ -13,6 +13,7 @@ export const LEVELS = [
     id: 1,
     slug: 'level-01-devils-snare',
     title: "The Devil's Snare",
+    subtitle: "Harry needs your help!",
     narrative:
       "Harry, Ron and Hermione have fallen through a trapdoor and are being strangled by Devil's Snare. " +
       "Hermione knows the spell to stop it — but the incantation is hidden in a shattered magical portrait. " +
