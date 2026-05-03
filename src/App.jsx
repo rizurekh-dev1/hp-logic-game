@@ -16,9 +16,19 @@ const GAME_STATES = {
   NEXT_LEVEL_TRANSITION: 'NEXT_LEVEL_TRANSITION'
 };
 
+// Debug shortcut: check for ?level=X in URL
+const getStartingLevel = () => {
+  const params = new URLSearchParams(window.location.search);
+  const lvl = parseInt(params.get('level'));
+  if (!isNaN(lvl) && lvl > 0 && lvl <= LEVELS.length) {
+    return lvl - 1;
+  }
+  return 0;
+};
+
 const initialState = {
   currentState: GAME_STATES.INITIAL_LOAD,
-  currentLevelIndex: 0,
+  currentLevelIndex: getStartingLevel(),
   totalLevels: LEVELS.length,
   unlockedLevels: 0,
 };
@@ -90,7 +100,13 @@ function App() {
       const onLoaded = () => {
         setTimeout(() => {
           if (state.currentState === GAME_STATES.INITIAL_LOAD) {
-            dispatch({ type: 'ASSETS_LOADED' });
+            // If we are debugging a specific level, jump straight to the intro
+            const isDebug = new URLSearchParams(window.location.search).has('level');
+            if (isDebug) {
+              dispatch({ type: 'START_GAME' });
+            } else {
+              dispatch({ type: 'ASSETS_LOADED' });
+            }
           } else {
             dispatch({ type: 'TRANSITION_COMPLETE' });
           }
