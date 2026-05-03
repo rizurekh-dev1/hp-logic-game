@@ -75,11 +75,11 @@ export const LEVELS = [
         "6. The Yellow bottle is the only one left!"
       ],
       bottles: [
-        { id: 'blue', color: '#00e5ff', label: 'Option A' },
-        { id: 'red', color: '#ff4444', label: 'Option B' },
-        { id: 'yellow', color: '#ffd700', label: 'Option C' },
+        { id: 'red', color: '#ff4444', label: 'Option A' },
+        { id: 'blue', color: '#00e5ff', label: 'Option B' },
+        { id: 'green', color: '#00ff88', label: 'Option C' },
         { id: 'purple', color: '#a020f0', label: 'Option D' },
-        { id: 'green', color: '#00ff88', label: 'Option E' }
+        { id: 'yellow', color: '#ffd700', label: 'Option E' }
       ],
       solution: 'yellow',
       failureMessage: "💀 The flames consume you! That was the wrong potion. Luckily, time turns back... Try again!"
