@@ -1,7 +1,9 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useState } from 'react';
 import './App.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { trackEvent } from './analytics.js';
+import { PuzzleGame } from './components/PuzzleGame.jsx';
+import { LEVELS } from './config/levels.js';
 
 const GAME_STATES = {
   INITIAL_LOAD: 'INITIAL_LOAD',
@@ -44,6 +46,8 @@ function gameReducer(state, action) {
 
 function App() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [sparks, setSparks] = useState(0); // for the offline mini-game
 
   // Track every state transition automatically
   useEffect(() => {
@@ -51,17 +55,36 @@ function App() {
       state: state.currentState,
       level: state.currentLevelIndex + 1,
     });
-  }, [state.currentState]);
+  }, [state.currentState, state.currentLevelIndex]);
 
-  // Simulate asset preloading
+  // Online/Offline listeners
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  // Actual asset preloading
   useEffect(() => {
     if (state.currentState === GAME_STATES.INITIAL_LOAD) {
-      const timer = setTimeout(() => {
-        dispatch({ type: 'ASSETS_LOADED' });
-      }, 1500);
-      return () => clearTimeout(timer);
+      const currentLevel = LEVELS[state.currentLevelIndex];
+      const img = new Image();
+      img.src = currentLevel.assets.puzzleImage;
+      
+      const onLoaded = () => {
+        // Add a small 800ms purposeful delay so the intro doesn't instantly flash by
+        setTimeout(() => dispatch({ type: 'ASSETS_LOADED' }), 800);
+      };
+      
+      img.onload = onLoaded;
+      img.onerror = onLoaded; // Fallback so the game doesn't hang if image fails
     }
-  }, [state.currentState]);
+  }, [state.currentState, state.currentLevelIndex]);
 
   const handleTapToStart = () => {
     trackEvent('tap_to_start', { level: state.currentLevelIndex + 1 });
@@ -77,6 +100,29 @@ function App() {
     trackEvent('puzzle_solved', { level: state.currentLevelIndex + 1 });
     dispatch({ type: 'PUZZLE_SOLVED' });
   };
+
+  // ── Offline Screen (The "Floo Network" Mini-game) ──────────────────────
+  if (!isOnline) {
+    return (
+      <div className="app-container">
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          className="screen"
+          onClick={() => setSparks(s => s + 1)}
+          style={{ cursor: 'pointer', userSelect: 'none' }}
+        >
+          <h1 className="magic-text" style={{ color: '#ff4444' }}>The Floo Network is Down!</h1>
+          <p>It seems your magical connection has dropped.</p>
+          <div style={{ margin: '40px 0', fontSize: '64px' }}>
+            🔥
+          </div>
+          <p style={{ color: 'var(--accent-gold)' }}>Tap the screen to cast sparks while we wait!</p>
+          <p className="magic-text" style={{ fontSize: '24px', marginTop: '20px' }}>Sparks cast: {sparks}</p>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container">
@@ -135,17 +181,15 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             className="screen"
+            style={{ justifyContent: 'flex-start', paddingTop: '10px' }}
           >
-            <h2 className="magic-text">The Devil&apos;s Snare</h2>
-            <div style={{ width: 'min(90vw, 400px)', aspectRatio: '1/1', border: '2px dashed var(--accent-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px 0' }}>
-              <p>Jigsaw Puzzle Goes Here</p>
-            </div>
-            <button
-              style={{ padding: '10px 20px', fontSize: '18px', background: 'var(--accent-gold)', color: '#000', border: 'none', borderRadius: '8px', cursor: 'pointer', fontFamily: 'var(--font-ui)', fontWeight: 'bold' }}
-              onClick={handlePuzzleSolved}
-            >
-              Simulate Win
-            </button>
+            <h2 className="magic-text" style={{ fontSize: '18px', marginBottom: '6px' }}>
+              {LEVELS[state.currentLevelIndex].title}
+            </h2>
+            <PuzzleGame
+              level={LEVELS[state.currentLevelIndex]}
+              onComplete={handlePuzzleSolved}
+            />
           </motion.div>
         )}
 
@@ -158,7 +202,10 @@ function App() {
             className="screen"
           >
             <h1 className="magic-text" style={{ color: 'var(--accent-blue)' }}>Brilliant!</h1>
-            <p>You saved Ron and Hermione.</p>
+            <p>{LEVELS[state.currentLevelIndex].completionMessage}</p>
+            <p style={{ marginTop: '12px', fontSize: '22px', fontFamily: 'var(--font-magic)', color: 'var(--accent-gold)', letterSpacing: '4px' }}>
+              {LEVELS[state.currentLevelIndex].completionWord}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
