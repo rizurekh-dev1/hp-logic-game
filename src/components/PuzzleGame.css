@@ -138,32 +138,16 @@
 .puzzle-tray {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap; /* Prevents wrapping to keep board visible */
-  justify-content: flex-start;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
   width: 100%;
-  max-width: min(95vw, 500px);
+  max-width: min(90vw, 400px);
   box-sizing: border-box;
   background: rgba(255,255,255,0.04);
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.08);
-  overflow-x: auto; /* Enables horizontal swipe */
-  -webkit-overflow-scrolling: touch;
-  margin-top: auto; /* Push to bottom */
-}
-
-/* Custom subtle scrollbar */
-.puzzle-tray::-webkit-scrollbar {
-  height: 4px;
-}
-.puzzle-tray::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.1);
-}
-.puzzle-tray::-webkit-scrollbar-thumb {
-  background: var(--accent-blue);
-  border-radius: 10px;
 }
 
 /* ── Draggable pieces ────────────────────────────────────── */
