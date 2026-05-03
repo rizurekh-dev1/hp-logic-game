@@ -1,0 +1,106 @@
+.math-challenge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  gap: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.problem-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.problem-text {
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.visual-hints {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 15px;
+}
+
+.hint-row {
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: var(--accent-gold);
+}
+
+.answer-display {
+  background: rgba(0, 0, 0, 0.4);
+  width: 120px;
+  height: 60px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 32px;
+  font-family: var(--font-magic);
+  transition: all 0.2s;
+}
+
+.answer-display.error {
+  border-color: #ff4444;
+  color: #ff4444;
+  animation: shake 0.4s ease-in-out;
+}
+
+.answer-display.success {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.keypad-btn {
+  height: 60px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 24px;
+  font-family: var(--font-ui);
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keypad-btn.submit {
+  background: var(--accent-blue);
+  color: black;
+}
+
+.keypad-btn.clear {
+  color: #ff4444;
+}
+
+.feedback-error { color: #ff4444; font-weight: bold; }
+.feedback-success { color: var(--accent-blue); font-weight: bold; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}

@@ -3,13 +3,14 @@ import './App.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { trackEvent } from './analytics.js';
 import { PuzzleGame } from './components/PuzzleGame.jsx';
+import { MathChallenge } from './components/MathChallenge.jsx';
 import { LEVELS } from './config/levels.js';
 
 const GAME_STATES = {
   INITIAL_LOAD: 'INITIAL_LOAD',
   TAP_TO_START: 'TAP_TO_START',
   LEVEL_INTRO: 'LEVEL_INTRO',
-  PUZZLE_ACTIVE: 'PUZZLE_ACTIVE',
+  CHALLENGE_ACTIVE: 'CHALLENGE_ACTIVE',
   LEVEL_SUCCESS: 'LEVEL_SUCCESS',
   NEXT_LEVEL_TRANSITION: 'NEXT_LEVEL_TRANSITION'
 };
@@ -27,9 +28,9 @@ function gameReducer(state, action) {
       return { ...state, currentState: GAME_STATES.TAP_TO_START };
     case 'START_GAME':
       return { ...state, currentState: GAME_STATES.LEVEL_INTRO };
-    case 'START_PUZZLE':
-      return { ...state, currentState: GAME_STATES.PUZZLE_ACTIVE };
-    case 'PUZZLE_SOLVED':
+    case 'START_CHALLENGE':
+      return { ...state, currentState: GAME_STATES.CHALLENGE_ACTIVE };
+    case 'LEVEL_SOLVED':
       return { ...state, currentState: GAME_STATES.LEVEL_SUCCESS };
     case 'NEXT_LEVEL':
       if (state.currentLevelIndex + 1 >= state.totalLevels) return state;
@@ -58,6 +59,7 @@ function App() {
     trackEvent('game_state_changed', {
       state: state.currentState,
       level: state.currentLevelIndex + 1,
+      type: currentLevel.type
     });
   }, [state.currentState, state.currentLevelIndex]);
 
@@ -98,7 +100,7 @@ function App() {
   useEffect(() => {
     let wakeLock = null;
     const requestWakeLock = async () => {
-      if ('wakeLock' in navigator && state.currentState === GAME_STATES.PUZZLE_ACTIVE) {
+      if ('wakeLock' in navigator && state.currentState === GAME_STATES.CHALLENGE_ACTIVE) {
         try {
           wakeLock = await navigator.wakeLock.request('screen');
         } catch (err) { console.warn('Wake Lock error:', err); }
@@ -114,6 +116,15 @@ function App() {
       if (wakeLock) wakeLock.release().catch(() => {});
     };
   }, [state.currentState]);
+
+  const handleLevelSolved = () => {
+    const eventName = `level_${state.currentLevelIndex + 1}_${currentLevel.type.toLowerCase()}_success`;
+    trackEvent(eventName, { 
+      level: state.currentLevelIndex + 1,
+      type: currentLevel.type 
+    });
+    dispatch({ type: 'LEVEL_SOLVED' });
+  };
 
   return (
     <div className="app-container">
@@ -188,16 +199,16 @@ function App() {
                 <p>{currentLevel.subtitle}</p>
                 <button
                   className="magic-button"
-                  onClick={() => dispatch({ type: 'START_PUZZLE' })}
+                  onClick={() => dispatch({ type: 'START_CHALLENGE' })}
                 >
                   Enter the Challenge
                 </button>
               </motion.div>
             )}
 
-            {state.currentState === GAME_STATES.PUZZLE_ACTIVE && (
+            {state.currentState === GAME_STATES.CHALLENGE_ACTIVE && (
               <motion.div
-                key="puzzle"
+                key="challenge"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
@@ -207,10 +218,18 @@ function App() {
                 <h2 className="magic-text" style={{ fontSize: '18px', marginBottom: '6px' }}>
                   {currentLevel.title}
                 </h2>
-                <PuzzleGame
-                  level={currentLevel}
-                  onComplete={() => dispatch({ type: 'PUZZLE_SOLVED' })}
-                />
+                
+                {currentLevel.type === 'JIGSAW' ? (
+                  <PuzzleGame
+                    level={currentLevel}
+                    onComplete={handleLevelSolved}
+                  />
+                ) : (
+                  <MathChallenge
+                    level={currentLevel}
+                    onComplete={handleLevelSolved}
+                  />
+                )}
               </motion.div>
             )}
 
