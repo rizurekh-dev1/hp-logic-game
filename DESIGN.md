@@ -48,6 +48,10 @@ We will build a Progressive Web App using React (Vite) and Framer Motion. This p
   - **Audio/Auto-play Gate:** The game starts in a `TAP_TO_START` state to explicitly unlock the browser's audio context before the Harry Potter narrative begins.
   - **Looping Hook:** To prevent missed context if distracted, the introductory "fourth-wall break" animation seamlessly loops until the user interacts with the puzzle.
   - **State Persistence & Wake Lock:** Implements the Screen Wake Lock API to prevent the screen from sleeping while thinking. `localStorage` saves the puzzle state on every single piece drop to ensure zero data loss if the app is killed.
+- **Analytics (Adapter Pattern):**
+  - **Initial Provider:** PostHog (free tier, funnel dashboards out of the box).
+  - **Architecture:** A dedicated `src/analytics.js` module is the ONLY file that imports or references any analytics SDK. All other components exclusively call `trackEvent(eventName, properties)` from this adapter. Swapping to Google Analytics 4 (or any other provider) requires changing ONLY `analytics.js`. Zero hunt-and-replace across the rest of the codebase.
+  - **Key events to track:** `app_launched`, `tap_to_start`, `level_intro_viewed`, `puzzle_started`, `piece_placed`, `puzzle_solved`, `level_failed`.
 
 ## The Assignment
 Before writing any game logic, set up a basic Vite React app, make it a PWA, deploy it to a free host (like Vercel), and install it on your son's phone to verify the "Add to Home Screen" flow and fullscreen feel.
