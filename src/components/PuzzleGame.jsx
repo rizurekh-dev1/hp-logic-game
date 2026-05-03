@@ -126,11 +126,31 @@ export function PuzzleGame({ level, onComplete }) {
   function handleDragEnd(event, info, piece) {
     const dropX = info.point.x;
     const dropY = info.point.y;
-    const el = document.elementFromPoint(dropX, dropY);
-    const slotEl = el?.closest('[data-slot]');
-    if (!slotEl) return;
-    const [slotRow, slotCol] = slotEl.dataset.slot.split('-').map(Number);
-    placePiece(piece.id, slotRow, slotCol);
+
+    // Magnetic detection: find the closest slot center
+    let closestSlot = null;
+    let minDistance = 60; // Max "magnetic" reach in pixels
+
+    const slotElements = document.querySelectorAll('[data-slot]');
+    slotElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const dist = Math.sqrt(
+        Math.pow(dropX - centerX, 2) + Math.pow(dropY - centerY, 2)
+      );
+
+      if (dist < minDistance) {
+        minDistance = dist;
+        closestSlot = el.dataset.slot;
+      }
+    });
+
+    if (closestSlot) {
+      const [slotRow, slotCol] = closestSlot.split('-').map(Number);
+      placePiece(piece.id, slotRow, slotCol);
+    }
   }
 
   const unplacedPieces = pieces.filter(p => !p.isPlaced);
@@ -143,7 +163,14 @@ export function PuzzleGame({ level, onComplete }) {
           style={{ width: `${(correctCount / TOTAL) * 100}%` }}
         />
       </div>
-      <p className="puzzle-progress-text">{correctCount} of {TOTAL} pieces placed</p>
+      
+      <div className="puzzle-header-row">
+        <p className="puzzle-progress-text">{correctCount} of {TOTAL} pieces</p>
+        <div className="puzzle-reference-container">
+           <span className="reference-label">Goal Image</span>
+           <img src={level.assets.puzzleImage} className="puzzle-reference-thumb" alt="Reference" />
+        </div>
+      </div>
 
       <div
         className="puzzle-board"
@@ -152,6 +179,12 @@ export function PuzzleGame({ level, onComplete }) {
           gridTemplateRows: `repeat(${ROWS}, ${PIECE_SIZE}px)`,
         }}
       >
+        {/* The Ghost Guide */}
+        <div 
+          className="puzzle-board-ghost" 
+          style={{ backgroundImage: `url(${level.assets.puzzleImage})` }} 
+        />
+
         {Array.from({ length: ROWS }, (_, row) =>
           Array.from({ length: COLS }, (_, col) => {
             const key = `${row}-${col}`;

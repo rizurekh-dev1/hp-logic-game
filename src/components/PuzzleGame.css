@@ -32,14 +32,59 @@
   margin: 0;
 }
 
+.puzzle-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(90vw, 360px);
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.puzzle-reference-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.reference-label {
+  font-size: 10px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.puzzle-reference-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--accent-gold);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+}
+
 /* ── Board ───────────────────────────────────────────────── */
 .puzzle-board {
   display: grid;
-  gap: 3px;
-  background: rgba(255,255,255,0.05);
-  border: 2px solid rgba(0,229,255,0.2);
-  border-radius: 8px;
+  gap: 2px; /* Slight gap between slots */
+  background: rgba(0,0,0,0.3);
   padding: 4px;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.1);
+  position: relative;
+}
+
+.puzzle-board-ghost {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  opacity: 0.15; /* The faint guide */
+  pointer-events: none;
+  background-size: cover;
+  z-index: 0;
 }
 
 .puzzle-slot {
