@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { trackEvent } from './analytics.js';
 import { PuzzleGame } from './components/PuzzleGame.jsx';
 import { MathChallenge } from './components/MathChallenge.jsx';
+import { PotionRiddle } from './components/PotionRiddle.jsx';
 import { LEVELS } from './config/levels.js';
 
 const GAME_STATES = {
@@ -224,13 +225,22 @@ function App() {
                   {currentLevel.title}
                 </h2>
                 
-                {currentLevel.type === 'JIGSAW' ? (
+                {currentLevel.type === 'JIGSAW' && (
                   <PuzzleGame
                     level={currentLevel}
                     onComplete={handleLevelSolved}
                   />
-                ) : (
+                )}
+                
+                {currentLevel.type === 'MATH_CHALLENGE' && (
                   <MathChallenge
+                    level={currentLevel}
+                    onComplete={handleLevelSolved}
+                  />
+                )}
+
+                {currentLevel.type === 'POTION_RIDDLE' && (
+                  <PotionRiddle
                     level={currentLevel}
                     onComplete={handleLevelSolved}
                   />

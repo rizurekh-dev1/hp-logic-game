@@ -55,4 +55,37 @@ export const LEVELS = [
       puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png', // Fallback or background
     },
   },
+
+  {
+    id: 3,
+    slug: 'level-03-potions-riddle',
+    type: 'POTION_RIDDLE',
+    title: "Snape's Potion Riddle",
+    subtitle: "Deduction & Fire",
+    narrative:
+      "A wall of black fire blocks the way! Seven bottles sit on a shelf, but only one will let you pass. " +
+      "Use Hermione's logic to find the Potion of Protection.",
+    riddle: {
+      clues: [
+        "1. The Purple bottle is at the very end of the line (far right).",
+        "2. The Safe Potion is exactly in the middle of the line.",
+        "3. The Red bottle is poison—it sits directly next to the Purple one.",
+        "4. The Blue and Green bottles are best friends—they sit next to each other.",
+        "5. The Yellow bottle is the only one left!"
+      ],
+      bottles: [
+        { id: 'blue', color: '#00e5ff', label: 'Blue' },
+        { id: 'green', color: '#00ff88', label: 'Green' },
+        { id: 'yellow', color: '#ffd700', label: 'Yellow' },
+        { id: 'red', color: '#ff4444', label: 'Red' },
+        { id: 'purple', color: '#a020f0', label: 'Purple' }
+      ],
+      solution: 'yellow'
+    },
+    completionWord: 'PROTEGO',
+    completionMessage: "The flames part as you drink the Yellow potion! Your logic is as sharp as Hermione's.",
+    assets: {
+      puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
+    },
+  },
 ];
