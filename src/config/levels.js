@@ -40,6 +40,10 @@ export const LEVELS = [
     problem: {
       text: "At the magical shop, 5 Brooms cost $50. If you buy 2 Brooms and 1 Silver Key together, it costs $35. What is the difference in price between 1 Broom and 1 Silver Key?",
       solution: 5,
+      visualHints: [
+        { type: 'equation', content: '🧹🧹🧹🧹🧹 = $50' },
+        { type: 'equation', content: '🧹🧹 + 🔑 = $35' }
+      ],
       items: {
         broom: { icon: '🧹', value: 10 },
         key: { icon: '🔑', value: 15 }

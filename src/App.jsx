@@ -78,6 +78,11 @@ function App() {
   // Asset preloading
   useEffect(() => {
     if (state.currentState === GAME_STATES.INITIAL_LOAD || state.currentState === GAME_STATES.NEXT_LEVEL_TRANSITION) {
+      if (!currentLevel.assets.puzzleImage) {
+        dispatch({ type: state.currentState === GAME_STATES.INITIAL_LOAD ? 'ASSETS_LOADED' : 'TRANSITION_COMPLETE' });
+        return;
+      }
+
       const img = new Image();
       img.src = currentLevel.assets.puzzleImage;
       

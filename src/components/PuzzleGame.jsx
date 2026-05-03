@@ -129,7 +129,7 @@ export function PuzzleGame({ level, onComplete }) {
 
     // Magnetic detection: find the closest slot center
     let closestSlot = null;
-    let minDistance = 60; // Max "magnetic" reach in pixels
+    let minDistance = PIECE_SIZE * 0.6; // Adaptive magnetic reach based on grid size
 
     const slotElements = document.querySelectorAll('[data-slot]');
     slotElements.forEach(el => {

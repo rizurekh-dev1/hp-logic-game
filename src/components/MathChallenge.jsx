@@ -56,12 +56,11 @@ export function MathChallenge({ level, onComplete }) {
         <p className="problem-text">{problem.text}</p>
         
         <div className="visual-hints">
-          <div className="hint-row">
-            <span>{Array(5).fill(problem.items.broom.icon).join('')} = $50</span>
-          </div>
-          <div className="hint-row">
-            <span>{problem.items.broom.icon}{problem.items.broom.icon} + {problem.items.key.icon} = $35</span>
-          </div>
+          {problem.visualHints?.map((hint, idx) => (
+            <div key={idx} className="hint-row">
+              <span>{hint.content}</span>
+            </div>
+          ))}
         </div>
       </motion.div>
 
