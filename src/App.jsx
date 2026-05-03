@@ -86,6 +86,40 @@ function App() {
     }
   }, [state.currentState, state.currentLevelIndex]);
 
+  // ── Screen Wake Lock API ─────────────────────────────────────────────────
+  useEffect(() => {
+    let wakeLock = null;
+
+    const requestWakeLock = async () => {
+      if ('wakeLock' in navigator && state.currentState === GAME_STATES.PUZZLE_ACTIVE) {
+        try {
+          wakeLock = await navigator.wakeLock.request('screen');
+        } catch (err) {
+          console.warn('Wake Lock error:', err);
+        }
+      }
+    };
+
+    requestWakeLock();
+
+    // The wake lock is released automatically when the tab becomes hidden.
+    // We must re-request it when the user tabs back in.
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        requestWakeLock();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (wakeLock) {
+        wakeLock.release().catch(() => {});
+      }
+    };
+  }, [state.currentState]);
+
   const handleTapToStart = () => {
     trackEvent('tap_to_start', { level: state.currentLevelIndex + 1 });
     dispatch({ type: 'START_GAME' });
