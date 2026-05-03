@@ -21,7 +21,7 @@ const GAME_STATES = {
 const getStartingLevel = () => {
   const params = new URLSearchParams(window.location.search);
   const lvl = parseInt(params.get('level'));
-  if (!isNaN(lvl) && lvl > 0 && lvl <= 4) { // Updated to support up to level 4
+  if (!isNaN(lvl) && lvl > 0 && lvl <= LEVELS.length) { // Dynamic length check
     return lvl - 1;
   }
   return 0;

@@ -61,13 +61,13 @@ export function PatternMatch({ level, onComplete }) {
                 </div>
               ))}
               <div className="sequence-item next-placeholder">
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="wait" initial={false}>
                   {selectedOption ? (
                     <motion.div
                       key={selectedOption.id}
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.5 }}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1.1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
                     >
                       <Rune rotation={selectedOption.rotation} dots={selectedOption.dots} size="small" />
                     </motion.div>
@@ -88,7 +88,7 @@ export function PatternMatch({ level, onComplete }) {
         </div>
       </div>
 
-      {/* Options */}
+      {/* Options Area */}
       <div className="options-area">
         <h4 className="options-title">Select the Correct Rune:</h4>
         <div className="options-grid">
@@ -105,7 +105,7 @@ export function PatternMatch({ level, onComplete }) {
         </div>
       </div>
 
-      {/* Action */}
+      {/* Action Area */}
       <div className="action-area">
         <button
           className={`magic-button ${!selectedOptionId ? 'disabled' : ''} ${status}`}
@@ -124,7 +124,7 @@ export function PatternMatch({ level, onComplete }) {
             exit={{ opacity: 0 }}
             className="pattern-error"
           >
-            The mirror remains clouded. That is not the true reflection.
+            {pattern.failureMessage}
           </motion.p>
         )}
       </AnimatePresence>

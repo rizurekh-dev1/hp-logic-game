@@ -112,6 +112,7 @@ export const LEVELS = [
         { id: 'opt-3', rotation: 90, dots: 4, isCorrect: false },
         { id: 'opt-4', rotation: 0, dots: 5, isCorrect: false }
       ],
+      failureMessage: "The mirror remains clouded. That is not the true reflection of the pattern.",
       hint: "Look at the direction of the triangle and count the dots carefully!"
     },
     completionWord: 'ALOHOMORA',
