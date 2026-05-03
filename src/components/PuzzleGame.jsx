@@ -166,10 +166,6 @@ export function PuzzleGame({ level, onComplete }) {
       
       <div className="puzzle-header-row">
         <p className="puzzle-progress-text">{correctCount} of {TOTAL} pieces</p>
-        <div className="puzzle-reference-container">
-           <span className="reference-label">Goal Image</span>
-           <img src={level.assets.puzzleImage} className="puzzle-reference-thumb" alt="Reference" />
-        </div>
       </div>
 
       <div
