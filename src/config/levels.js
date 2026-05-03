@@ -80,7 +80,8 @@ export const LEVELS = [
         { id: 'red', color: '#ff4444', label: 'Red' },
         { id: 'purple', color: '#a020f0', label: 'Purple' }
       ],
-      solution: 'yellow'
+      solution: 'yellow',
+      failureMessage: "❌ That was poison! Luckily, Hermione had an antidote. Check the clues again."
     },
     completionWord: 'PROTEGO',
     completionMessage: "The flames part as you drink the Yellow potion! Your logic is as sharp as Hermione's.",

@@ -16,7 +16,7 @@ export function PotionRiddle({ level, onComplete }) {
   };
 
   const handleDrink = () => {
-    if (!selectedId) return;
+    if (!selectedId || status !== 'idle') return;
 
     const isCorrect = selectedId === riddle.solution;
 
@@ -29,7 +29,7 @@ export function PotionRiddle({ level, onComplete }) {
       setStatus('error');
       trackEvent('potion_incorrect_attempt', { level: level.id, color: selectedId });
       if (navigator.vibrate) navigator.vibrate(200);
-      setTimeout(() => setStatus('idle'), 1000);
+      setTimeout(() => setStatus('idle'), 1200);
     }
   };
 
@@ -99,7 +99,7 @@ export function PotionRiddle({ level, onComplete }) {
             exit={{ opacity: 0 }}
             className="potion-feedback error"
           >
-            ❌ That was poison! Luckily, Hermione had an antidote. Try again.
+            {riddle.failureMessage}
           </motion.div>
         )}
       </AnimatePresence>
