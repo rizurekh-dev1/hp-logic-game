@@ -90,4 +90,34 @@ export const LEVELS = [
       puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
     },
   },
+
+  {
+    id: 4,
+    slug: 'level-04-mirror-erised',
+    type: 'PATTERN_MATCH',
+    title: "The Mirror of Erised",
+    subtitle: "Runic Reflection",
+    narrative:
+      "The mirror does not show your face, but the logic of the ancient runes. " +
+      "Find the missing piece of the pattern to reveal the Philosopher's Stone!",
+    pattern: {
+      sequence: [
+        { rotation: 0, dots: 1 },
+        { rotation: 90, dots: 2 },
+        { rotation: 180, dots: 3 }
+      ],
+      options: [
+        { id: 'opt-1', rotation: 270, dots: 4, isCorrect: true },
+        { id: 'opt-2', rotation: 270, dots: 3, isCorrect: false },
+        { id: 'opt-3', rotation: 90, dots: 4, isCorrect: false },
+        { id: 'opt-4', rotation: 0, dots: 5, isCorrect: false }
+      ],
+      hint: "Look at the direction of the triangle and count the dots carefully!"
+    },
+    completionWord: 'ALOHOMORA',
+    completionMessage: "The Mirror shimmers and the Stone appears in your pocket! You have mastered the patterns of magic.",
+    assets: {
+      puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
+    },
+  },
 ];

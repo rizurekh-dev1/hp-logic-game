@@ -5,6 +5,7 @@ import { trackEvent } from './analytics.js';
 import { PuzzleGame } from './components/PuzzleGame.jsx';
 import { MathChallenge } from './components/MathChallenge.jsx';
 import { PotionRiddle } from './components/PotionRiddle.jsx';
+import { PatternMatch } from './components/PatternMatch.jsx';
 import { LEVELS } from './config/levels.js';
 
 const GAME_STATES = {
@@ -20,7 +21,7 @@ const GAME_STATES = {
 const getStartingLevel = () => {
   const params = new URLSearchParams(window.location.search);
   const lvl = parseInt(params.get('level'));
-  if (!isNaN(lvl) && lvl > 0 && lvl <= LEVELS.length) {
+  if (!isNaN(lvl) && lvl > 0 && lvl <= 4) { // Updated to support up to level 4
     return lvl - 1;
   }
   return 0;
@@ -257,6 +258,13 @@ function App() {
 
                 {currentLevel.type === 'POTION_RIDDLE' && (
                   <PotionRiddle
+                    level={currentLevel}
+                    onComplete={handleLevelSolved}
+                  />
+                )}
+
+                {currentLevel.type === 'PATTERN_MATCH' && (
+                  <PatternMatch
                     level={currentLevel}
                     onComplete={handleLevelSolved}
                   />
