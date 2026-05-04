@@ -41,7 +41,10 @@ export function PotionRiddle({ level, onComplete }) {
         animate={{ opacity: 1, y: 0 }}
         className="clue-scroll"
       >
-        <h3 className="scroll-title">The Potion Riddler</h3>
+        {riddle.warningHeader && (
+          <p className="warning-header">{riddle.warningHeader}</p>
+        )}
+        <h3 className="scroll-title">The Potion Riddle</h3>
         <ul className="clue-list">
           {riddle.clues.map((clue, i) => (
             <li key={i} className="clue-item">{clue}</li>

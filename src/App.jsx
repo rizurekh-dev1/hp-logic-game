@@ -7,22 +7,25 @@ import { MathChallenge } from './components/MathChallenge.jsx';
 import { PotionRiddle } from './components/PotionRiddle.jsx';
 import { PatternMatch } from './components/PatternMatch.jsx';
 import { BossDuel } from './components/BossDuel.jsx';
+import { StoryDialogue } from './components/StoryDialogue.jsx';
 import { LEVELS } from './config/levels.js';
+import { STORYLINE } from './config/storyline.js';
 
 const GAME_STATES = {
   INITIAL_LOAD: 'INITIAL_LOAD',
   TAP_TO_START: 'TAP_TO_START',
+  STORY_SEQUENCE: 'STORY_SEQUENCE',
   LEVEL_INTRO: 'LEVEL_INTRO',
   CHALLENGE_ACTIVE: 'CHALLENGE_ACTIVE',
   LEVEL_SUCCESS: 'LEVEL_SUCCESS',
-  NEXT_LEVEL_TRANSITION: 'NEXT_LEVEL_TRANSITION'
+  NEXT_LEVEL_TRANSITION: 'NEXT_LEVEL_TRANSITION',
+  GAME_COMPLETE: 'GAME_COMPLETE',
 };
 
-// Debug shortcut: check for ?level=X in URL
 const getStartingLevel = () => {
   const params = new URLSearchParams(window.location.search);
   const lvl = parseInt(params.get('level'));
-  if (!isNaN(lvl) && lvl > 0 && lvl <= LEVELS.length) { // Dynamic length check
+  if (!isNaN(lvl) && lvl > 0 && lvl <= LEVELS.length) {
     return lvl - 1;
   }
   return 0;
@@ -33,6 +36,8 @@ const initialState = {
   currentLevelIndex: getStartingLevel(),
   totalLevels: LEVELS.length,
   unlockedLevels: 0,
+  storyQueue: null,
+  storyTarget: null,
 };
 
 function gameReducer(state, action) {
@@ -40,7 +45,12 @@ function gameReducer(state, action) {
     case 'ASSETS_LOADED':
       return { ...state, currentState: GAME_STATES.TAP_TO_START };
     case 'START_GAME':
-      return { ...state, currentState: GAME_STATES.LEVEL_INTRO };
+      return {
+        ...state,
+        currentState: GAME_STATES.STORY_SEQUENCE,
+        storyQueue: STORYLINE.prologue,
+        storyTarget: GAME_STATES.LEVEL_INTRO,
+      };
     case 'START_CHALLENGE':
       return { ...state, currentState: GAME_STATES.CHALLENGE_ACTIVE };
     case 'LEVEL_SOLVED':
@@ -50,10 +60,36 @@ function gameReducer(state, action) {
       return {
         ...state,
         currentState: GAME_STATES.NEXT_LEVEL_TRANSITION,
-        currentLevelIndex: state.currentLevelIndex + 1
+        currentLevelIndex: state.currentLevelIndex + 1,
       };
-    case 'TRANSITION_COMPLETE':
-      return { ...state, currentState: GAME_STATES.LEVEL_INTRO };
+    case 'TRANSITION_COMPLETE': {
+      const prevStory = STORYLINE.levels[state.currentLevelIndex];
+      const nextStory = STORYLINE.levels[state.currentLevelIndex + 1];
+      const queue = [
+        ...(prevStory?.outro || []),
+        ...(nextStory?.intro || []),
+      ];
+      return {
+        ...state,
+        currentState: GAME_STATES.STORY_SEQUENCE,
+        storyQueue: queue.length > 0 ? queue : null,
+        storyTarget: GAME_STATES.LEVEL_INTRO,
+      };
+    }
+    case 'SHOW_EPILOGUE':
+      return {
+        ...state,
+        currentState: GAME_STATES.STORY_SEQUENCE,
+        storyQueue: STORYLINE.epilogue,
+        storyTarget: GAME_STATES.GAME_COMPLETE,
+      };
+    case 'STORY_COMPLETE':
+      return {
+        ...state,
+        currentState: state.storyTarget || GAME_STATES.LEVEL_INTRO,
+        storyQueue: null,
+        storyTarget: null,
+      };
     default:
       return state;
   }
@@ -62,21 +98,19 @@ function gameReducer(state, action) {
 function App() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [sparks, setSparks] = useState(0); 
+  const [sparks, setSparks] = useState(0);
 
   const currentLevel = LEVELS[state.currentLevelIndex] || LEVELS[0];
   const isLastLevel = state.currentLevelIndex + 1 === state.totalLevels;
 
-  // Track state transitions
   useEffect(() => {
     trackEvent('game_state_changed', {
       state: state.currentState,
       level: state.currentLevelIndex + 1,
-      type: currentLevel.type
+      type: currentLevel.type,
     });
   }, [state.currentState, state.currentLevelIndex]);
 
-  // Online/Offline listeners
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
@@ -88,7 +122,6 @@ function App() {
     };
   }, []);
 
-  // Asset preloading
   useEffect(() => {
     if (state.currentState === GAME_STATES.INITIAL_LOAD || state.currentState === GAME_STATES.NEXT_LEVEL_TRANSITION) {
       if (!currentLevel.assets.puzzleImage) {
@@ -98,11 +131,10 @@ function App() {
 
       const img = new Image();
       img.src = currentLevel.assets.puzzleImage;
-      
+
       const onLoaded = () => {
         setTimeout(() => {
           if (state.currentState === GAME_STATES.INITIAL_LOAD) {
-            // If we are debugging a specific level, jump straight to the intro
             const isDebug = new URLSearchParams(window.location.search).has('level');
             if (isDebug) {
               dispatch({ type: 'START_GAME' });
@@ -114,13 +146,12 @@ function App() {
           }
         }, 800);
       };
-      
+
       img.onload = onLoaded;
       img.onerror = onLoaded;
     }
   }, [state.currentState, currentLevel.assets.puzzleImage]);
 
-  // Screen Wake Lock
   useEffect(() => {
     let wakeLock = null;
     const requestWakeLock = async () => {
@@ -143,9 +174,9 @@ function App() {
 
   const handleLevelSolved = () => {
     const eventName = `level_${state.currentLevelIndex + 1}_${currentLevel.type.toLowerCase()}_success`;
-    trackEvent(eventName, { 
+    trackEvent(eventName, {
       level: state.currentLevelIndex + 1,
-      type: currentLevel.type 
+      type: currentLevel.type,
     });
     dispatch({ type: 'LEVEL_SOLVED' });
   };
@@ -154,10 +185,10 @@ function App() {
     <div className="app-container">
       <AnimatePresence mode="wait">
         {!isOnline ? (
-          <motion.div 
+          <motion.div
             key="offline"
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="screen"
             onClick={() => setSparks(s => s + 1)}
@@ -184,18 +215,6 @@ function App() {
               </motion.div>
             )}
 
-            {state.currentState === GAME_STATES.NEXT_LEVEL_TRANSITION && (
-              <motion.div
-                key="transitioning"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="screen"
-              >
-                <h1 className="magic-text">Traveling to {currentLevel.title}...</h1>
-              </motion.div>
-            )}
-
             {state.currentState === GAME_STATES.TAP_TO_START && (
               <motion.div
                 key="tap-start"
@@ -211,6 +230,26 @@ function App() {
               </motion.div>
             )}
 
+            {state.currentState === GAME_STATES.NEXT_LEVEL_TRANSITION && (
+              <motion.div
+                key="transitioning"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="screen"
+              >
+                <h1 className="magic-text">Traveling to {currentLevel.title}...</h1>
+              </motion.div>
+            )}
+
+            {state.currentState === GAME_STATES.STORY_SEQUENCE && state.storyQueue && (
+              <StoryDialogue
+                key="story"
+                queue={state.storyQueue}
+                onComplete={() => dispatch({ type: 'STORY_COMPLETE' })}
+              />
+            )}
+
             {state.currentState === GAME_STATES.LEVEL_INTRO && (
               <motion.div
                 key="intro"
@@ -220,7 +259,7 @@ function App() {
                 className="screen"
               >
                 <h2 className="magic-text">Level {state.currentLevelIndex + 1}</h2>
-                <p>{currentLevel.subtitle}</p>
+                <p style={{ maxWidth: '360px', lineHeight: 1.6 }}>{currentLevel.narrative}</p>
                 <button
                   className="magic-button"
                   onClick={() => dispatch({ type: 'START_CHALLENGE' })}
@@ -242,14 +281,14 @@ function App() {
                 <h2 className="magic-text" style={{ fontSize: '18px', marginBottom: '6px' }}>
                   {currentLevel.title}
                 </h2>
-                
+
                 {currentLevel.type === 'JIGSAW' && (
                   <PuzzleGame
                     level={currentLevel}
                     onComplete={handleLevelSolved}
                   />
                 )}
-                
+
                 {currentLevel.type === 'MATH_CHALLENGE' && (
                   <MathChallenge
                     level={currentLevel}
@@ -302,8 +341,33 @@ function App() {
                     Next Level
                   </button>
                 ) : (
-                  <p style={{ marginTop: '30px', color: 'var(--accent-gold)' }}>More puzzles coming soon!</p>
+                  <button
+                    className="magic-button"
+                    style={{ marginTop: '30px' }}
+                    onClick={() => dispatch({ type: 'SHOW_EPILOGUE' })}
+                  >
+                    See the Ending
+                  </button>
                 )}
+              </motion.div>
+            )}
+
+            {state.currentState === GAME_STATES.GAME_COMPLETE && (
+              <motion.div
+                key="game-complete"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                className="screen"
+              >
+                <h1 className="magic-text" style={{ color: 'var(--accent-gold)' }}>The End</h1>
+                <p style={{ marginTop: '20px', maxWidth: '360px', lineHeight: 1.6 }}>
+                  You have completed your first year at Hogwarts. The Philosopher's Stone is safe, thanks to your logic and bravery.
+                </p>
+                <div style={{ margin: '30px 0', fontSize: '48px' }}>🏆</div>
+                <p className="magic-text" style={{ color: 'var(--accent-gold)', fontSize: '20px' }}>
+                  More adventures await...
+                </p>
               </motion.div>
             )}
           </>

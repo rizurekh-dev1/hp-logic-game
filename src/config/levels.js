@@ -63,29 +63,26 @@ export const LEVELS = [
     title: "Snape's Potion Riddle",
     subtitle: "Deduction & Fire",
     narrative:
-      "A wall of black fire blocks the way! You must choose the correct potion to live and pass through the flames. " +
-      "Choose wrongly, and you shall be trapped here forever! Use your logic to survive.",
+      "A wall of black fire blocks the way! Three bottles stand before you. " +
+      "Choose the correct one to live. Choose wrong, and you shall be trapped here forever!",
     riddle: {
+      warningHeader: "⚡ CHOOSE WISELY. DEATH AWAITS THE FOOLISH. ⚡",
       clues: [
-        "1. Imagine 5 bottles in a line on a stone shelf.",
-        "2. The Purple bottle is at the very end of the line (far right).",
-        "3. The Safe Potion is the one exactly in the middle of the line.",
-        "4. The Red bottle is poison—it sits directly next to the Purple one.",
-        "5. The Blue and Green bottles sit next to each other at the other end.",
-        "6. The Yellow bottle is the only one left!"
+        "1. Three bottles sit in a row on the stone shelf.",
+        "2. The Red bottle is on the LEFT end.",
+        "3. The Green bottle is on the RIGHT end.",
+        "4. Only the bottle in the MIDDLE lets you pass through the flames."
       ],
       bottles: [
-        { id: 'red', color: '#ff4444', label: 'Option A' },
-        { id: 'blue', color: '#00e5ff', label: 'Option B' },
-        { id: 'green', color: '#00ff88', label: 'Option C' },
-        { id: 'purple', color: '#a020f0', label: 'Option D' },
-        { id: 'yellow', color: '#ffd700', label: 'Option E' }
+        { id: 'red', color: '#ff4444', label: 'Red' },
+        { id: 'blue', color: '#00e5ff', label: 'Blue' },
+        { id: 'green', color: '#00ff88', label: 'Green' }
       ],
-      solution: 'yellow',
-      failureMessage: "💀 The flames consume you! That was the wrong potion. Luckily, time turns back... Try again!"
+      solution: 'blue',
+      failureMessage: "💀 The flames consume you! Wrong potion. Try again!"
     },
     completionWord: 'PROTEGO',
-    completionMessage: "The flames part as you drink the Yellow potion! Your logic is as sharp as Hermione's.",
+    completionMessage: "The flames part as you drink the Blue potion! Your logic is as sharp as Hermione's.",
     assets: {
       puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
     },
