@@ -66,7 +66,7 @@ export function MathChallenge({ level, onComplete }) {
 
       {/* Answer Area */}
       <div className={`answer-display ${status}`}>
-        <span className="dollar-sign">$</span>
+        {level.id === 2 && <span className="dollar-sign">$</span>}
         <span className="answer-value">{input || '?'}</span>
       </div>
 

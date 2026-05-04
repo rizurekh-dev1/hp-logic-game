@@ -28,7 +28,7 @@ function getInitialState() {
   const urlLevel = parseInt(params.get('level'));
   if (!isNaN(urlLevel) && urlLevel > 0 && urlLevel <= LEVELS.length) {
     return {
-      currentState: GAME_STATES.INITIAL_LOAD,
+      currentState: GAME_STATES.CHALLENGE_ACTIVE,
       currentLevelIndex: urlLevel - 1,
       totalLevels: LEVELS.length,
       unlockedLevels: LEVELS.length,
@@ -68,6 +68,7 @@ function getInitialState() {
 const initialState = getInitialState();
 
 function gameReducer(state, action) {
+  console.log('gameReducer:', action.type, 'levelIndex:', state.currentLevelIndex, 'totalLevels:', state.totalLevels);
   switch (action.type) {
     case 'ASSETS_LOADED':
       return { ...state, currentState: GAME_STATES.TAP_TO_START };
@@ -100,13 +101,17 @@ function gameReducer(state, action) {
         savedLevelIndex: 0,
       };
     case 'LEVEL_SOLVED':
+      console.log('LEVEL_SOLVED - currentIndex:', state.currentLevelIndex, 'total:', state.totalLevels);
       return {
         ...state,
         currentState: GAME_STATES.LEVEL_SUCCESS,
         unlockedLevels: Math.max(state.unlockedLevels, state.currentLevelIndex + 1),
       };
     case 'NEXT_LEVEL':
-      if (state.currentLevelIndex + 1 >= state.totalLevels) return state;
+      if (state.currentLevelIndex + 1 >= state.totalLevels) {
+        console.log('NEXT_LEVEL BLOCKED - cannot go past total levels');
+        return state;
+      }
       return {
         ...state,
         currentState: GAME_STATES.NEXT_LEVEL_TRANSITION,
@@ -119,6 +124,7 @@ function gameReducer(state, action) {
         ...(prevStory?.outro || []),
         ...(nextStory?.intro || []),
       ];
+      console.log('TRANSITION_COMPLETE - story queue length:', queue.length);
       return {
         ...state,
         currentState: GAME_STATES.STORY_SEQUENCE,
@@ -134,6 +140,7 @@ function gameReducer(state, action) {
         storyTarget: GAME_STATES.GAME_COMPLETE,
       };
     case 'STORY_COMPLETE':
+      console.log('STORY_COMPLETE - target:', state.storyTarget);
       return {
         ...state,
         currentState: state.storyTarget || GAME_STATES.LEVEL_INTRO,
@@ -173,33 +180,28 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (state.currentState === GAME_STATES.INITIAL_LOAD || state.currentState === GAME_STATES.NEXT_LEVEL_TRANSITION) {
-      if (!currentLevel.assets.puzzleImage) {
-        dispatch({ type: state.currentState === GAME_STATES.INITIAL_LOAD ? 'ASSETS_LOADED' : 'TRANSITION_COMPLETE' });
-        return;
-      }
+    if (state.currentState !== GAME_STATES.INITIAL_LOAD && state.currentState !== GAME_STATES.NEXT_LEVEL_TRANSITION) return;
 
-      const img = new Image();
-      img.src = currentLevel.assets.puzzleImage;
-
-      const onLoaded = () => {
-        setTimeout(() => {
-          if (state.currentState === GAME_STATES.INITIAL_LOAD) {
-            const isDebug = new URLSearchParams(window.location.search).has('level');
-            if (isDebug) {
-              dispatch({ type: 'START_GAME' });
-            } else {
-              dispatch({ type: 'ASSETS_LOADED' });
-            }
-          } else {
-            dispatch({ type: 'TRANSITION_COMPLETE' });
-          }
-        }, 800);
-      };
-
-      img.onload = onLoaded;
-      img.onerror = onLoaded;
+    if (!currentLevel.assets.puzzleImage) {
+      dispatch({ type: state.currentState === GAME_STATES.INITIAL_LOAD ? 'ASSETS_LOADED' : 'TRANSITION_COMPLETE' });
+      return;
     }
+
+    const img = new Image();
+    let cancelled = false;
+
+    const onLoaded = () => {
+      setTimeout(() => {
+        if (cancelled) return;
+        dispatch({ type: state.currentState === GAME_STATES.INITIAL_LOAD ? 'ASSETS_LOADED' : 'TRANSITION_COMPLETE' });
+      }, 800);
+    };
+
+    img.onload = onLoaded;
+    img.onerror = onLoaded;
+    img.src = currentLevel.assets.puzzleImage;
+
+    return () => { cancelled = true; };
   }, [state.currentState, currentLevel.assets.puzzleImage]);
 
   useEffect(() => {
@@ -441,6 +443,7 @@ function App() {
                 <p className="magic-text" style={{ color: 'var(--accent-gold)', fontSize: '20px' }}>
                   More adventures await...
                 </p>
+                {/*
                 <button
                   className="magic-button"
                   style={{ marginTop: '20px' }}
@@ -451,6 +454,7 @@ function App() {
                 >
                   Play Again
                 </button>
+                */}
               </motion.div>
             )}
           </>

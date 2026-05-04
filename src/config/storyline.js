@@ -169,11 +169,35 @@ export const STORYLINE = {
       outro: [
         {
           character: 'dumbledore',
-          text: 'You\'ve shown courage, wisdom, and selflessness, Harry. The Stone is safe because you understood its true secret.',
+          text: 'The Stone is safe for now, Harry. But Hogwarts will always need protectors. Rest while you can.',
+        },
+        {
+          character: 'ron',
+          text: 'Come on, Harry! The train leaves soon! We don\'t want to miss it!',
+        },
+      ],
+    },
+
+    6: {
+      intro: [
+        {
+          character: 'ron',
+          text: 'My foot! It\'s stuck in the tracks! The Hogwarts Express is coming!',
         },
         {
           character: 'harry',
-          text: 'I couldn\'t have done it without you — the one who guided us through every challenge.',
+          text: 'Hold on, Ron! I need to calculate how much time we have before the train reaches the bridge.',
+        },
+      ],
+      midgame: [],
+      outro: [
+        {
+          character: 'harry',
+          text: 'Got it! Just in time! The train rushes past as we scramble to safety.',
+        },
+        {
+          character: 'ron',
+          text: 'Blimey, Harry! You saved my life. I owe you one.',
         },
       ],
     },
@@ -182,19 +206,23 @@ export const STORYLINE = {
   epilogue: [
     {
       character: 'dumbledore',
-      text: 'And so, the Philosopher\'s Stone remains hidden. Another year at Hogwarts saved by a sharp mind and a brave heart.',
+      text: 'From the Devil\'s Snare to the Hogwarts Express, you\'ve faced every challenge with courage and logic. Well done.',
     },
     {
       character: 'harry',
-      text: 'We couldn\'t have done any of it without you. You helped us solve every puzzle and face every danger.',
+      text: 'We couldn\'t have done any of it without you. Every puzzle solved, every danger faced — you were there.',
+    },
+    {
+      character: 'ron',
+      text: 'Especially when my foot was stuck on those tracks! Blimey, that was close.',
     },
     {
       character: 'dumbledore',
-      text: 'For extraordinary courage and logic, I award the Order of Merlin, First Class... to our unseen hero.',
+      text: 'For extraordinary courage, sharp logic, and true friendship, I award the Order of Merlin, First Class... to our unseen hero.',
     },
     {
       character: 'dumbledore',
-      text: 'The adventure may be over — but Hogwarts will always need a clever mind. Until next time.',
+      text: 'The adventure may be over for now — but Hogwarts will always need a clever mind. Until next time.',
     },
   ],
 };

@@ -14,19 +14,17 @@ function TextReveal({ text, speed = 25, onComplete }) {
     const step = Math.max(1, Math.floor(total / 60));
 
     const interval = setInterval(() => {
-      setRevealed(prev => {
-        const next = prev + step;
-        if (next >= total) {
-          clearInterval(interval);
-          onComplete?.();
-          return total;
-        }
-        return next;
-      });
+      setRevealed(prev => Math.min(prev + step, total));
     }, speed);
 
     return () => clearInterval(interval);
-  }, [text, speed, onComplete]);
+  }, [text, speed]);
+
+  useEffect(() => {
+    if (revealed > 0 && revealed >= text.length) {
+      onComplete?.();
+    }
+  }, [revealed, text, onComplete]);
 
   return (
     <span>

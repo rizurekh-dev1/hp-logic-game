@@ -156,4 +156,31 @@ export const LEVELS = [
       puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
     },
   },
+
+  {
+    id: 6,
+    slug: 'level-06-hogwarts-express-rescue',
+    type: 'MATH_CHALLENGE',
+    title: "The Hogwarts Express Rescue",
+    subtitle: "Speed & Calculation",
+    narrative:
+      "Ron's foot is stuck in the tracks on the Great Bridge! The Hogwarts Express is barreling towards him! " +
+      "Harry needs to calculate how much time he has to free Ron before the train reaches the bridge.",
+    problem: {
+      text: "Train Distance: 400 meters. Train Speed: 40 meters per second. How many seconds does Harry have to free Ron before the train reaches the bridge?",
+      solution: 10,
+      visualHints: [
+        { type: 'equation', content: 'Distance ÷ Speed = Time' },
+      ],
+      items: {
+        train: { icon: '🚂', value: 40 },
+        bridge: { icon: '🌉', value: 400 }
+      }
+    },
+    completionWord: 'EXPRESS',
+    completionMessage: "Harry frees Ron just in time! The Hogwarts Express rushes past as they scramble to safety.",
+    assets: {
+      puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
+    },
+  },
 ];
