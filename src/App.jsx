@@ -10,6 +10,7 @@ import { BossDuel } from './components/BossDuel.jsx';
 import { StoryDialogue } from './components/StoryDialogue.jsx';
 import { LEVELS } from './config/levels.js';
 import { STORYLINE } from './config/storyline.js';
+import { saveProgress, getSavedProgress, clearProgress } from './config/storage.js';
 
 const GAME_STATES = {
   INITIAL_LOAD: 'INITIAL_LOAD',
@@ -22,23 +23,49 @@ const GAME_STATES = {
   GAME_COMPLETE: 'GAME_COMPLETE',
 };
 
-const getStartingLevel = () => {
+function getInitialState() {
   const params = new URLSearchParams(window.location.search);
-  const lvl = parseInt(params.get('level'));
-  if (!isNaN(lvl) && lvl > 0 && lvl <= LEVELS.length) {
-    return lvl - 1;
+  const urlLevel = parseInt(params.get('level'));
+  if (!isNaN(urlLevel) && urlLevel > 0 && urlLevel <= LEVELS.length) {
+    return {
+      currentState: GAME_STATES.INITIAL_LOAD,
+      currentLevelIndex: urlLevel - 1,
+      totalLevels: LEVELS.length,
+      unlockedLevels: LEVELS.length,
+      storyQueue: null,
+      storyTarget: null,
+      hasSavedProgress: false,
+      savedLevelIndex: 0,
+    };
   }
-  return 0;
-};
 
-const initialState = {
-  currentState: GAME_STATES.INITIAL_LOAD,
-  currentLevelIndex: getStartingLevel(),
-  totalLevels: LEVELS.length,
-  unlockedLevels: 0,
-  storyQueue: null,
-  storyTarget: null,
-};
+  const savedLevel = getSavedProgress();
+  if (savedLevel !== null && savedLevel > 0 && savedLevel < LEVELS.length) {
+    return {
+      currentState: GAME_STATES.INITIAL_LOAD,
+      currentLevelIndex: 0,
+      totalLevels: LEVELS.length,
+      unlockedLevels: savedLevel,
+      storyQueue: null,
+      storyTarget: null,
+      hasSavedProgress: true,
+      savedLevelIndex: savedLevel,
+    };
+  }
+
+  return {
+    currentState: GAME_STATES.INITIAL_LOAD,
+    currentLevelIndex: 0,
+    totalLevels: LEVELS.length,
+    unlockedLevels: 0,
+    storyQueue: null,
+    storyTarget: null,
+    hasSavedProgress: false,
+    savedLevelIndex: 0,
+  };
+}
+
+const initialState = getInitialState();
 
 function gameReducer(state, action) {
   switch (action.type) {
@@ -53,8 +80,31 @@ function gameReducer(state, action) {
       };
     case 'START_CHALLENGE':
       return { ...state, currentState: GAME_STATES.CHALLENGE_ACTIVE };
+    case 'LOAD_SAVED':
+      return {
+        ...state,
+        currentState: GAME_STATES.LEVEL_INTRO,
+        currentLevelIndex: state.savedLevelIndex,
+        hasSavedProgress: false,
+      };
+    case 'RESET_AND_START':
+      clearProgress();
+      return {
+        ...state,
+        currentState: GAME_STATES.STORY_SEQUENCE,
+        currentLevelIndex: 0,
+        unlockedLevels: 0,
+        storyQueue: STORYLINE.prologue,
+        storyTarget: GAME_STATES.LEVEL_INTRO,
+        hasSavedProgress: false,
+        savedLevelIndex: 0,
+      };
     case 'LEVEL_SOLVED':
-      return { ...state, currentState: GAME_STATES.LEVEL_SUCCESS };
+      return {
+        ...state,
+        currentState: GAME_STATES.LEVEL_SUCCESS,
+        unlockedLevels: Math.max(state.unlockedLevels, state.currentLevelIndex + 1),
+      };
     case 'NEXT_LEVEL':
       if (state.currentLevelIndex + 1 >= state.totalLevels) return state;
       return {
@@ -173,9 +223,11 @@ function App() {
   }, [state.currentState]);
 
   const handleLevelSolved = () => {
-    const eventName = `level_${state.currentLevelIndex + 1}_${currentLevel.type.toLowerCase()}_success`;
+    const nextLevel = state.currentLevelIndex + 1;
+    saveProgress(nextLevel);
+    const eventName = `level_${nextLevel}_${currentLevel.type.toLowerCase()}_success`;
     trackEvent(eventName, {
-      level: state.currentLevelIndex + 1,
+      level: nextLevel,
       type: currentLevel.type,
     });
     dispatch({ type: 'LEVEL_SOLVED' });
@@ -222,11 +274,32 @@ function App() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 className="screen"
-                onClick={() => dispatch({ type: 'START_GAME' })}
-                style={{ cursor: 'pointer' }}
               >
-                <h1 className="magic-text" style={{ color: 'var(--accent-gold)' }}>Tap to Open</h1>
-                <p>Your Hogwarts Letter Awaits</p>
+                <h1 className="magic-text" style={{ color: 'var(--accent-gold)' }}>Hogwarts Letter</h1>
+                <p>Your Hogwarts adventure awaits!</p>
+                {state.hasSavedProgress ? (
+                  <div className="start-choices">
+                    <button
+                      className="magic-button"
+                      onClick={() => dispatch({ type: 'LOAD_SAVED' })}
+                    >
+                      Continue from Level {state.savedLevelIndex + 1}
+                    </button>
+                    <button
+                      className="magic-button secondary"
+                      onClick={() => dispatch({ type: 'RESET_AND_START' })}
+                    >
+                      New Game
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className="magic-button"
+                    onClick={() => dispatch({ type: 'START_GAME' })}
+                  >
+                    Start Your Journey
+                  </button>
+                )}
               </motion.div>
             )}
 
@@ -368,6 +441,16 @@ function App() {
                 <p className="magic-text" style={{ color: 'var(--accent-gold)', fontSize: '20px' }}>
                   More adventures await...
                 </p>
+                <button
+                  className="magic-button"
+                  style={{ marginTop: '20px' }}
+                  onClick={() => {
+                    clearProgress();
+                    window.location.reload();
+                  }}
+                >
+                  Play Again
+                </button>
               </motion.div>
             )}
           </>
