@@ -194,15 +194,15 @@ export const LEVELS = [
       "Harry finds a blank piece of parchment. Hermione thinks it might be the Marauder's Map! " +
       "Translate the coded password using the Ancient Runes key to reveal the map.",
     cipher: {
-      encrypted: '\u26A1\uD83C\uDF19\uD83E\uDD89\u2728\uD83E\uDE84',
+      encrypted: '\u25B2\u25CF\u25A0\u25C6\u2605',
       solution: 'LUMOS',
       answerLength: 5,
       key: [
-        { symbol: '\u26A1', letter: 'L' },
-        { symbol: '\uD83C\uDF19', letter: 'U' },
-        { symbol: '\uD83E\uDD89', letter: 'M' },
-        { symbol: '\u2728', letter: 'O' },
-        { symbol: '\uD83E\uDE84', letter: 'S' },
+        { symbol: '\u25B2', letter: 'L' },
+        { symbol: '\u25CF', letter: 'U' },
+        { symbol: '\u25A0', letter: 'M' },
+        { symbol: '\u25C6', letter: 'O' },
+        { symbol: '\u2605', letter: 'S' },
       ],
     },
     completionWord: 'LUMOS',
