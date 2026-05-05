@@ -69,6 +69,12 @@ export function StoryDialogue({ queue, onComplete }) {
       exit={{ opacity: 0 }}
       onClick={handleTap}
     >
+      <button
+        className="skip-button"
+        onClick={(e) => { e.stopPropagation(); onComplete(); }}
+      >
+        Skip &rarr;
+      </button>
       <div className="story-background">
         <div className="story-particles" />
       </div>

@@ -61,23 +61,11 @@ export const STORYLINE = {
   prologue: [
     {
       character: 'dumbledore',
-      text: 'The night is quiet at Hogwarts. But beneath the castle, in the forbidden third-floor corridor, danger stirs...',
+      text: 'Danger stirs beneath Hogwarts. Someone is trying to steal the Philosopher\'s Stone — and I fear the Dark Lord may return.',
     },
     {
       character: 'harry',
-      text: 'Professor Snape is trying to steal the Philosopher\'s Stone. I saw him in the Forbidden Forest!',
-    },
-    {
-      character: 'hermione',
-      text: 'Fluffy — the three-headed dog — is guarding the trapdoor. Whatever is down there, Snape wants it.',
-    },
-    {
-      character: 'ron',
-      text: 'Hang on. You two are actually going to face a Dark wizard? On purpose?',
-    },
-    {
-      character: 'harry',
-      text: 'If the Stone falls into Voldemort\'s hands, Hogwarts won\'t be safe. I can\'t do this alone — will you help us?',
+      text: 'We need your logic to get past the traps and save the Stone. Will you help us?',
     },
   ],
 
@@ -126,32 +114,18 @@ export const STORYLINE = {
         },
       ],
       midgame: [],
-      outro: [
-        {
-          character: 'hermione',
-          text: 'The yellow potion! The flames part for us! We\'re almost there.',
-        },
-      ],
+      outro: [],
     },
 
     4: {
       intro: [
         {
           character: 'dumbledore',
-          text: 'The Mirror of Erised shows what we desire most. But only one who wishes to find the Stone — not use it — can claim it.',
-        },
-        {
-          character: 'harry',
-          text: 'There\'s a pattern on the mirror\'s frame — a riddle in the runes. I need to solve it to unlock the Stone.',
+          text: 'The Mirror of Erised shows what we desire most. Only one who wishes to find the Stone — not use it — can claim it. The runes will test your logic.',
         },
       ],
       midgame: [],
-      outro: [
-        {
-          character: 'harry',
-          text: 'I understand! The mirror puts the Stone in my pocket. I\'ve got it!',
-        },
-      ],
+      outro: [],
     },
 
     5: {
@@ -160,22 +134,9 @@ export const STORYLINE = {
           character: 'quirrell',
           text: 'So, Potter. Did you really think Snape was the threat? The Stone belongs to the Dark Lord.',
         },
-        {
-          character: 'harry',
-          text: 'You\'ll have to go through me. And I\'ve got help — someone with logic sharper than any Dark wizard.',
-        },
       ],
       midgame: [],
-      outro: [
-        {
-          character: 'dumbledore',
-          text: 'The Stone is safe for now, Harry. But Hogwarts will always need protectors. Rest while you can.',
-        },
-        {
-          character: 'ron',
-          text: 'Come on, Harry! The train leaves soon! We don\'t want to miss it!',
-        },
-      ],
+      outro: [],
     },
 
     6: {
