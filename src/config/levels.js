@@ -183,4 +183,58 @@ export const LEVELS = [
       puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
     },
   },
+
+  {
+    id: 7,
+    slug: 'level-07-marauders-map',
+    type: 'CIPHER',
+    title: "The Marauder's Map Secret",
+    subtitle: "Ancient Runes Decoder",
+    narrative:
+      "Harry finds a blank piece of parchment. Hermione thinks it might be the Marauder's Map! " +
+      "Translate the coded password using the Ancient Runes key to reveal the map.",
+    cipher: {
+      encrypted: '\u26A1\uD83C\uDF19\uD83E\uDD89\u2728\uD83E\uDE84',
+      solution: 'LUMOS',
+      answerLength: 5,
+      key: [
+        { symbol: '\u26A1', letter: 'L' },
+        { symbol: '\uD83C\uDF19', letter: 'U' },
+        { symbol: '\uD83E\uDD89', letter: 'M' },
+        { symbol: '\u2728', letter: 'O' },
+        { symbol: '\uD83E\uDE84', letter: 'S' },
+      ],
+    },
+    completionWord: 'LUMOS',
+    completionMessage: "The parchment glows with golden light! Footprints appear — the Marauder's Map is revealed!",
+    assets: {
+      puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
+    },
+  },
+
+  {
+    id: 8,
+    slug: 'level-08-great-hall-sorting',
+    type: 'VENN_SORT',
+    title: "The Great Hall Sorting",
+    subtitle: "Venn Diagram Logic",
+    narrative:
+      "Filly the House-Elf needs help sorting magical deliveries into the correct trunks! " +
+      "Some items are Gold, some Fly, some are Both, and some are Neither!",
+    venn: {
+      circleA: { label: 'Gold', color: '#FFD700' },
+      circleB: { label: 'Flies', color: '#00E5FF' },
+      items: [
+        { id: 'snitch', label: 'Golden Snitch', emoji: '\uD83C\uDFC6', zone: 'both', gold: true, flies: true },
+        { id: 'broomstick', label: 'Firebolt Broomstick', emoji: '\uD83E\uDDF9', zone: 'flies', gold: false, flies: true },
+        { id: 'coin', label: 'Galleon Coin', emoji: '\uD83E\uDE99', zone: 'gold', gold: true, flies: false },
+        { id: 'socks', label: 'Wool Socks', emoji: '\uD83E\uDDE6', zone: 'neither', gold: false, flies: false },
+      ],
+    },
+    completionWord: 'SORTED',
+    completionMessage: "Every delivery is in the right trunk! Filly bows gratefully — well sorted!",
+    assets: {
+      puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
+    },
+  },
 ];

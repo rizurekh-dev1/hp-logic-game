@@ -162,20 +162,56 @@ export const STORYLINE = {
         },
       ],
     },
+
+    7: {
+      intro: [
+        {
+          character: 'hermione',
+          text: 'That blank parchment — it might be the Marauder\'s Map! But it needs a password to activate.',
+        },
+        {
+          character: 'harry',
+          text: 'There\'s a cipher key in the corner. Translate the ancient runes to unlock it!',
+        },
+      ],
+      midgame: [],
+      outro: [
+        {
+          character: 'harry',
+          text: 'LUMOS! The map glows to life! Footprints track everyone in the castle.',
+        },
+      ],
+    },
+
+    8: {
+      intro: [
+        {
+          character: 'harry',
+          text: 'Filly the House-Elf is overwhelmed! We need to sort deliveries into the right trunks.',
+        },
+      ],
+      midgame: [],
+      outro: [
+        {
+          character: 'harry',
+          text: 'All sorted! Filly can rest easy now. Great work!',
+        },
+      ],
+    },
   },
 
   epilogue: [
     {
       character: 'dumbledore',
-      text: 'From the Devil\'s Snare to the Hogwarts Express, you\'ve faced every challenge with courage and logic. Well done.',
+      text: 'From the Devil\'s Snare to deciphering ancient runes to sorting Filly\'s deliveries — you\'ve mastered every challenge. Well done.',
     },
     {
       character: 'harry',
-      text: 'We couldn\'t have done any of it without you. Every puzzle solved, every danger faced — you were there.',
+      text: 'We couldn\'t have done any of it without you. Every puzzle solved, every cipher cracked — you were there.',
     },
     {
       character: 'ron',
-      text: 'Especially when my foot was stuck on those tracks! Blimey, that was close.',
+      text: 'Even when my foot was stuck on those tracks! Blimey, that was close.',
     },
     {
       character: 'dumbledore',

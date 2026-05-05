@@ -7,6 +7,8 @@ import { MathChallenge } from './components/MathChallenge.jsx';
 import { PotionRiddle } from './components/PotionRiddle.jsx';
 import { PatternMatch } from './components/PatternMatch.jsx';
 import { BossDuel } from './components/BossDuel.jsx';
+import { CipherCrack } from './components/CipherCrack.jsx';
+import { VennSort } from './components/VennSort.jsx';
 import { StoryDialogue } from './components/StoryDialogue.jsx';
 import { LEVELS } from './config/levels.js';
 import { STORYLINE } from './config/storyline.js';
@@ -387,6 +389,20 @@ function App() {
 
                 {currentLevel.type === 'BOSS_DUEL' && (
                   <BossDuel
+                    level={currentLevel}
+                    onComplete={handleLevelSolved}
+                  />
+                )}
+
+                {currentLevel.type === 'CIPHER' && (
+                  <CipherCrack
+                    level={currentLevel}
+                    onComplete={handleLevelSolved}
+                  />
+                )}
+
+                {currentLevel.type === 'VENN_SORT' && (
+                  <VennSort
                     level={currentLevel}
                     onComplete={handleLevelSolved}
                   />
