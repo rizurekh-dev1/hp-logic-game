@@ -1,0 +1,81 @@
+<svg viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="bag" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8B4513"/>
+      <stop offset="100%" stop-color="#5C2E00"/>
+    </linearGradient>
+    <linearGradient id="coin" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#DAA520"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="440" height="300" rx="12" fill="#1a1a2e" opacity="0.9"/>
+
+  <text x="220" y="28" text-anchor="middle" fill="#FFD700" font-size="14" font-family="sans-serif" font-weight="bold">⚖ Magic Balance Scale</text>
+
+  <rect x="195" y="42" width="8" height="80" fill="#8B6914" rx="2"/>
+  <polygon points="220,120 176,120 198,42" fill="#8B6914"/>
+
+  <circle cx="220" cy="120" r="8" fill="url(#gold)" stroke="#8B6914" stroke-width="1"/>
+
+  <rect x="60" y="116" width="320" height="5" rx="2" fill="#8B6914"/>
+
+  <line x1="100" y1="121" x2="100" y2="170" stroke="#8B6914" stroke-width="2"/>
+  <line x1="340" y1="121" x2="340" y2="170" stroke="#8B6914" stroke-width="2"/>
+
+  <path d="M60,170 Q100,195 140,170" fill="none" stroke="#8B6914" stroke-width="2.5"/>
+  <path d="M300,170 Q340,195 380,170" fill="none" stroke="#8B6914" stroke-width="2.5"/>
+
+  <text x="100" y="164" text-anchor="middle" fill="#aaa" font-size="11" font-family="sans-serif">Left</text>
+  <text x="340" y="164" text-anchor="middle" fill="#aaa" font-size="11" font-family="sans-serif">Right</text>
+
+  <rect x="65" y="155" width="22" height="20" rx="3" fill="url(#bag)" stroke="#FFD700" stroke-width="0.8"/>
+  <rect x="90" y="155" width="22" height="20" rx="3" fill="url(#bag)" stroke="#FFD700" stroke-width="0.8"/>
+  <rect x="115" y="155" width="22" height="20" rx="3" fill="url(#bag)" stroke="#FFD700" stroke-width="0.8"/>
+  <text x="76" y="170" text-anchor="middle" fill="#FFF" font-size="7">?</text>
+  <text x="101" y="170" text-anchor="middle" fill="#FFF" font-size="7">?</text>
+  <text x="126" y="170" text-anchor="middle" fill="#FFF" font-size="7">?</text>
+
+  <circle cx="152" cy="165" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="152" y="168" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="164" cy="165" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="164" y="168" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+
+  <text x="114" y="145" text-anchor="middle" fill="#ccc" font-size="9" font-family="sans-serif">3 Mystery Bags + 2 Coins</text>
+
+  <circle cx="305" cy="162" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="305" y="165" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="318" cy="162" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="318" y="165" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="331" cy="162" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="331" y="165" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="344" cy="162" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="344" y="165" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="312" cy="176" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="312" y="179" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="325" cy="176" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="325" y="179" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="338" cy="176" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="338" y="179" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="310" cy="190" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="310" y="193" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="323" cy="190" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="323" y="193" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="336" cy="190" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="336" y="193" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+  <circle cx="349" cy="190" r="8" fill="url(#coin)" stroke="#B8860B" stroke-width="1.5"/>
+  <text x="349" y="193" text-anchor="middle" fill="#5C2E00" font-size="6" font-weight="bold">$</text>
+
+  <text x="330" y="142" text-anchor="middle" fill="#ccc" font-size="9" font-family="sans-serif">14 Gold Coins</text>
+
+  <text x="220" y="255" text-anchor="middle" fill="#00E5FF" font-size="14" font-family="sans-serif" font-weight="bold">Both sides are perfectly balanced!</text>
+  <text x="220" y="275" text-anchor="middle" fill="#ddd" font-size="13" font-family="sans-serif">How many coins does one Mystery Bag weigh?</text>
+
+  <text x="70" y="240" text-anchor="middle" fill="#FFD700" font-size="12" font-family="sans-serif">3x + 2</text>
+  <text x="370" y="240" text-anchor="middle" fill="#FFD700" font-size="12" font-family="sans-serif">14</text>
+</svg>

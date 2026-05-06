@@ -198,12 +198,68 @@ export const STORYLINE = {
         },
       ],
     },
+
+    9: {
+      intro: [
+        {
+          character: 'harry',
+          text: 'We need to get into that vault. The scale says 3 Mystery Bags plus 2 coins equals 14 coins. How much is one bag?',
+        },
+      ],
+      midgame: [],
+      outro: [
+        {
+          character: 'harry',
+          text: 'The vault door opens! The gold is ours! Griphook will be impressed.',
+        },
+      ],
+    },
+
+    10: {
+      intro: [
+        {
+          character: 'harry',
+          text: 'Professor Sprout needs the right fence measurements for her Devil\'s Snare patch. Area is 24, Perimeter is 22 — which dimensions fit?',
+        },
+      ],
+      midgame: [],
+      outro: [
+        {
+          character: 'harry',
+          text: 'The fence fits perfectly! The Devil\'s Snare is safely contained. Sprout is relieved!',
+        },
+      ],
+    },
+
+    11: {
+      intro: [
+        {
+          character: 'ron',
+          text: 'We\'re late! The Knight Bus is our only chance to get to Diagon Alley before it closes!',
+        },
+        {
+          character: 'harry',
+          text: 'But look — the bus is stuck between two Muggle buses! It needs to shrink and rotate to squeeze through!',
+        },
+      ],
+      midgame: [],
+      outro: [
+        {
+          character: 'ron',
+          text: 'HONK! Did you see that?! The bus went impossibly thin and zoomed right through!',
+        },
+        {
+          character: 'hermione',
+          text: 'Brilliant spatial reasoning! We\'ll make it to Diagon Alley with time to spare.',
+        },
+      ],
+    },
   },
 
   epilogue: [
     {
       character: 'dumbledore',
-      text: 'From the Devil\'s Snare to deciphering ancient runes to sorting Filly\'s deliveries — you\'ve mastered every challenge. Well done.',
+      text: 'From the Devil\'s Snare to Gringotts vaults to the Herbology greenhouse — you\'ve mastered every challenge. Well done.',
     },
     {
       character: 'harry',

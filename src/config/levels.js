@@ -194,8 +194,8 @@ export const LEVELS = [
       "Harry finds a blank piece of parchment. Hermione thinks it might be the Marauder's Map! " +
       "Translate the coded password using the Ancient Runes key to reveal the map.",
     cipher: {
-      encrypted: '\u25B2\u25CF\u25A0\u25C6\u2605',
-      solution: 'LUMOS',
+      encrypted: '\u25B2\u25C6\u25A0\u2605\u25CF',
+      solution: 'LOMSU',
       answerLength: 5,
       key: [
         { symbol: '\u25B2', letter: 'L' },
@@ -205,7 +205,7 @@ export const LEVELS = [
         { symbol: '\u2605', letter: 'S' },
       ],
     },
-    completionWord: 'LUMOS',
+    completionWord: 'LOMSU',
     completionMessage: "The parchment glows with golden light! Footprints appear — the Marauder's Map is revealed!",
     assets: {
       puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
@@ -235,6 +235,84 @@ export const LEVELS = [
     completionMessage: "Every delivery is in the right trunk! Filly bows gratefully — well sorted!",
     assets: {
       puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
+    },
+  },
+
+  {
+    id: 9,
+    slug: 'level-09-gringotts-vault',
+    type: 'MULTIPLE_CHOICE',
+    title: "Gringotts Vault Security",
+    subtitle: "Balance the Scales",
+    narrative:
+      "A vault at Gringotts is sealed by a magical scale! " +
+      "Both sides are perfectly balanced. Find the weight of one Mystery Bag to open the vault.",
+    question: {
+      image: '/assets/levels/balance-scale.svg',
+      text: '3 Mystery Bags + 2 Gold Coins balances perfectly with 14 Gold Coins. How many coins does one Mystery Bag weigh?',
+      options: [
+        { id: 'A', label: '3 coins', isCorrect: false },
+        { id: 'B', label: '4 coins', isCorrect: true },
+        { id: 'C', label: '6 coins', isCorrect: false },
+        { id: 'D', label: '8 coins', isCorrect: false },
+      ],
+    },
+    completionWord: 'GOLD',
+    completionMessage: "The vault door cranks open with a heavy metallic thud! The treasure is yours!",
+    assets: {
+      puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
+    },
+  },
+
+  {
+    id: 10,
+    slug: 'level-10-herbology-greenhouse',
+    type: 'MULTIPLE_CHOICE',
+    title: "The Herbology Greenhouse",
+    subtitle: "Perimeter & Area",
+    narrative:
+      "Professor Sprout needs to build a fence around a rare Devil's Snare patch. " +
+      "Help her find the right Length and Width using the Area and Perimeter!",
+    question: {
+      text: 'A rectangular plot has: Area = 24 sq ft, Perimeter = 22 ft. Which Length & Width are correct?',
+      options: [
+        { id: 'A', label: 'Length = 8, Width = 2', isCorrect: false },
+        { id: 'B', label: 'Length = 6, Width = 4', isCorrect: false },
+        { id: 'C', label: 'Length = 8, Width = 3', isCorrect: true },
+        { id: 'D', label: 'Length = 12, Width = 2', isCorrect: false },
+      ],
+    },
+    completionWord: 'SPROUT',
+    completionMessage: "The fence snaps into place! The Devil's Snare retreats safely inside!",
+    assets: {
+      puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
+    },
+  },
+
+  {
+    id: 11,
+    slug: 'level-11-knight-bus',
+    type: 'MULTIPLE_CHOICE',
+    title: "The Knight Bus Navigation",
+    subtitle: "Shrink and Rotate",
+    narrative:
+      "The Knight Bus is squeezing through traffic! To fit between two Muggle buses, " +
+      "the Knight Bus needs to magically 'shrink and rotate.' Identify which shadow " +
+      "the L-shaped stack of trunks would cast after a 90° turn!",
+    question: {
+      image: '/assets/levels/knight-bus.svg',
+      text: 'Which shadow does this L-shape cast after a 90° turn?',
+      options: [
+        { id: 'A', label: 'A', isCorrect: false },
+        { id: 'B', label: 'B', isCorrect: false },
+        { id: 'C', label: 'C', isCorrect: true },
+        { id: 'D', label: 'D', isCorrect: false },
+      ],
+    },
+    completionWord: 'SQUEEZE',
+    completionMessage: "HONK! The Knight Bus squeezes impossibly thin and zooms between the Muggle buses! You made it!",
+    assets: {
+      puzzleImage: '/assets/levels/knight-bus.svg',
     },
   },
 ];

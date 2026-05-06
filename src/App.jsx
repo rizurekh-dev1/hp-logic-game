@@ -9,6 +9,7 @@ import { PatternMatch } from './components/PatternMatch.jsx';
 import { BossDuel } from './components/BossDuel.jsx';
 import { CipherCrack } from './components/CipherCrack.jsx';
 import { VennSort } from './components/VennSort.jsx';
+import { MultipleChoice } from './components/MultipleChoice.jsx';
 import { StoryDialogue } from './components/StoryDialogue.jsx';
 import { LEVELS } from './config/levels.js';
 import { STORYLINE } from './config/storyline.js';
@@ -403,6 +404,13 @@ function App() {
 
                 {currentLevel.type === 'VENN_SORT' && (
                   <VennSort
+                    level={currentLevel}
+                    onComplete={handleLevelSolved}
+                  />
+                )}
+
+                {currentLevel.type === 'MULTIPLE_CHOICE' && (
+                  <MultipleChoice
                     level={currentLevel}
                     onComplete={handleLevelSolved}
                   />
