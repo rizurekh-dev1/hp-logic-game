@@ -41,7 +41,6 @@ export function VennSort({ level, onComplete }) {
     };
     dragRef.current = state;
     setDragState(state);
-    e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e) => {
@@ -56,14 +55,17 @@ export function VennSort({ level, onComplete }) {
 
   const handlePointerUp = (e) => {
     if (!dragRef.current) return;
+    const itemId = dragRef.current.id;
     const zone = getZoneAt(e.clientX, e.clientY);
     if (zone === 'tray') {
-      const newPlaced = { ...placed };
-      delete newPlaced[dragRef.current.id];
-      setPlaced(newPlaced);
+      setPlaced(prev => {
+        const next = { ...prev };
+        delete next[itemId];
+        return next;
+      });
     } else if (zone && zone !== 'tray') {
-      setPlaced(prev => ({ ...prev, [dragRef.current.id]: zone }));
-      trackEvent('venn_item_placed', { level: level.id, item: dragRef.current.id, zone });
+      setPlaced(prev => ({ ...prev, [itemId]: zone }));
+      trackEvent('venn_item_placed', { level: level.id, item: itemId, zone });
     }
     dragRef.current = null;
     setDragState(null);
@@ -100,8 +102,6 @@ export function VennSort({ level, onComplete }) {
             key={id}
             className={`placed-item ${isDragging ? 'dragging' : ''}`}
             onPointerDown={(e) => handlePointerDown(e, id)}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
             style={{ touchAction: 'none' }}
           >
             <span className="placed-emoji">{item.emoji}</span>
@@ -111,7 +111,7 @@ export function VennSort({ level, onComplete }) {
   );
 
   return (
-    <div className="venn-sort" ref={containerRef}>
+    <div className="venn-sort" ref={containerRef} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp}>
       <div className="venn-container">
         <div className="venn-circles">
           <div className="venn-circle circle-a" />
@@ -147,8 +147,6 @@ export function VennSort({ level, onComplete }) {
                 key={item.id}
                 className={`tray-item ${isDragging ? 'dragging' : ''}`}
                 onPointerDown={(e) => handlePointerDown(e, item.id)}
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
                 style={{ touchAction: 'none' }}
               >
                 <span className="tray-emoji">{item.emoji}</span>
