@@ -1,0 +1,147 @@
+.letter-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.letter-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.letter-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.letter-text {
+  color: #fff;
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.letter-input-box {
+  width: 120px;
+  height: 60px;
+  font-size: 2rem;
+  text-align: center;
+  border: 2px solid rgba(0, 229, 255, 0.5);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #00E5FF;
+  font-weight: bold;
+  text-transform: uppercase;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.letter-input-box:focus {
+  border-color: #00E5FF;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+}
+
+.letter-input-box:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.letter-input-box::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.9rem;
+  text-transform: none;
+}
+
+.magic-button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #00E5FF, #0097A7);
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+}
+
+.magic-button:hover:not(.disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 229, 255, 0.4);
+}
+
+.magic-button:active:not(.disabled) {
+  transform: translateY(0);
+}
+
+.magic-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.feedback-error {
+  color: #ff6b6b;
+  font-size: 1rem;
+  text-align: center;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.feedback-success {
+  color: #00E5FF;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 229, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .letter-input {
+    padding: 0.5rem;
+  }
+
+  .letter-card {
+    padding: 1rem;
+  }
+
+  .letter-text {
+    font-size: 1rem;
+  }
+
+  .letter-input-box {
+    width: 100px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .magic-button {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}

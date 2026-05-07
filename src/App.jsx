@@ -10,6 +10,7 @@ import { BossDuel } from './components/BossDuel.jsx';
 import { CipherCrack } from './components/CipherCrack.jsx';
 import { VennSort } from './components/VennSort.jsx';
 import { MultipleChoice } from './components/MultipleChoice.jsx';
+import { LetterInput } from './components/LetterInput.jsx';
 import { StoryDialogue } from './components/StoryDialogue.jsx';
 import { LEVELS } from './config/levels.js';
 import { STORYLINE } from './config/storyline.js';
@@ -411,6 +412,13 @@ function App() {
 
                 {currentLevel.type === 'MULTIPLE_CHOICE' && (
                   <MultipleChoice
+                    level={currentLevel}
+                    onComplete={handleLevelSolved}
+                  />
+                )}
+
+                {currentLevel.type === 'LETTER_INPUT' && (
+                  <LetterInput
                     level={currentLevel}
                     onComplete={handleLevelSolved}
                   />

@@ -292,27 +292,20 @@ export const LEVELS = [
   {
     id: 11,
     slug: 'level-11-knight-bus',
-    type: 'MULTIPLE_CHOICE',
-    title: "The Knight Bus Navigation",
-    subtitle: "Shrink and Rotate",
+    type: 'MATH_CHALLENGE',
+    title: "The Knight Bus Squeeze",
+    subtitle: "Magical Measurements",
     narrative:
-      "The Knight Bus is squeezing through traffic! To fit between two Muggle buses, " +
-      "the Knight Bus needs to magically 'shrink and rotate.' Identify which shadow " +
-      "the L-shaped stack of trunks would cast after a 90° turn!",
-    question: {
-      image: '/assets/levels/knight-bus.svg',
-      text: 'Which shadow does this L-shape cast after a 90° turn?',
-      options: [
-        { id: 'A', label: 'A', isCorrect: false },
-        { id: 'B', label: 'B', isCorrect: false },
-        { id: 'C', label: 'C', isCorrect: true },
-        { id: 'D', label: 'D', isCorrect: false },
-      ],
+      "The Knight Bus is racing toward a bridge that is only 8 meters high! " +
+      "You must calculate exactly how much the bus needs to shrink so it doesn't crash.",
+    problem: {
+      text: 'The bus has 3 decks, and each deck is 5 meters tall. If the bridge ahead is 8 meters high, how many meters must the bus shrink to fit through?',
+      solution: 7,
     },
-    completionWord: 'SQUEEZE',
-    completionMessage: "HONK! The Knight Bus squeezes impossibly thin and zooms between the Muggle buses! You made it!",
+    completionWord: 'SMASHING!',
+    completionMessage: "The bus flattened itself instantly, zooming under the bridge with inches to spare!",
     assets: {
-      puzzleImage: '/assets/levels/knight-bus.svg',
+      puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
     },
   },
 ];

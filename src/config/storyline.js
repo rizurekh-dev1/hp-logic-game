@@ -153,10 +153,6 @@ export const STORYLINE = {
       midgame: [],
       outro: [
         {
-          character: 'harry',
-          text: 'Got it! Just in time! The train rushes past as we scramble to safety.',
-        },
-        {
           character: 'ron',
           text: 'Blimey, Harry! You saved my life. I owe you one.',
         },
@@ -166,12 +162,8 @@ export const STORYLINE = {
     7: {
       intro: [
         {
-          character: 'hermione',
-          text: 'That blank parchment — it might be the Marauder\'s Map! But it needs a password to activate.',
-        },
-        {
           character: 'harry',
-          text: 'There\'s a cipher key in the corner. Translate the ancient runes to unlock it!',
+          text: 'There\'s a cipher key in the corner. Translate the ancient runes to unlock the Marauder\'s Map!',
         },
       ],
       midgame: [],
@@ -234,23 +226,15 @@ export const STORYLINE = {
     11: {
       intro: [
         {
-          character: 'ron',
-          text: 'We\'re late! The Knight Bus is our only chance to get to Diagon Alley before it closes!',
-        },
-        {
           character: 'harry',
-          text: 'But look — the bus is stuck between two Muggle buses! It needs to shrink and rotate to squeeze through!',
+          text: 'That bridge is only 8 meters high, but our 3 decks are 5 meters each! Quick—how many meters do we need to shrink to fit?',
         },
       ],
       midgame: [],
       outro: [
         {
           character: 'ron',
-          text: 'HONK! Did you see that?! The bus went impossibly thin and zoomed right through!',
-        },
-        {
-          character: 'hermione',
-          text: 'Brilliant spatial reasoning! We\'ll make it to Diagon Alley with time to spare.',
+          text: 'Bloody brilliant! I thought for sure we were going to lose the top deck there.',
         },
       ],
     },
