@@ -308,4 +308,28 @@ export const LEVELS = [
       puzzleImage: '/assets/levels/level-01-devils-snare/puzzle-image.png',
     },
   },
+
+  {
+    id: 12,
+    slug: 'level-12-corridor-whispers',
+    type: 'LETTER_INPUT',
+    title: "The Corridor of Whispers",
+    subtitle: "Deduction in the Dark",
+    narrative:
+      "Death Eaters are patrolling the manor! Ron has vanished into one of the rooms, " +
+      "and you must use the clues to find him before you're spotted.",
+    question: {
+      image: '/assets/levels/corridor-whispers.svg',
+      text: 'Find the door Ron is hiding behind using these clues:\n\n' +
+        '① Ron is not behind a door labeled with a vowel (A or E).\n' +
+        '② Door B is wide open and clearly empty.\n' +
+        '③ The door Ron is hiding behind is sitting right next to a vowel.',
+      correctAnswer: 'D',
+    },
+    completionWord: 'ESCAPED!',
+    completionMessage: "You pulled Ron out of the room just as a pair of Death Eaters turned the corner. That was close!",
+    assets: {
+      puzzleImage: '/assets/levels/corridor-whispers.svg',
+    },
+  },
 ];

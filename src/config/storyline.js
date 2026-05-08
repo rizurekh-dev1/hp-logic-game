@@ -246,6 +246,22 @@ export const STORYLINE = {
         },
       ],
     },
+
+    12: {
+      intro: [
+        {
+          character: 'harry',
+          text: 'I can\'t just open every door or the Death Eaters will hear me. I have to use logic to find which room Ron is in!',
+        },
+      ],
+      midgame: [],
+      outro: [
+        {
+          character: 'ron',
+          text: 'Great thinking, Harry! I saw the \'E\' on the door next to me and hoped you\'d use that to find me.',
+        },
+      ],
+    },
   },
 
   epilogue: [
