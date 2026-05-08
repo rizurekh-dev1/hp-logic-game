@@ -1,9 +1,17 @@
+import narratorAvatar from '../assets/avatars/narrator.svg';
+import harryAvatar from '../assets/avatars/harry.svg';
+import hermioneAvatar from '../assets/avatars/hermione.svg';
+import ronAvatar from '../assets/avatars/ron.svg';
+import dumbledoreAvatar from '../assets/avatars/dumbledore.svg';
+import quirrellAvatar from '../assets/avatars/quirrell.svg';
+import hagridAvatar from '../assets/avatars/hagrid.svg';
+
 export const CHARACTERS = {
   narrator: {
     id: 'narrator',
     name: 'Narrator',
     emoji: '📜',
-    avatar: '/src/assets/avatars/narrator.svg',
+    avatar: narratorAvatar,
     color: '#FFD700',
     gradient: 'linear-gradient(135deg, #FFD700, #FFA000)',
   },
@@ -11,7 +19,7 @@ export const CHARACTERS = {
     id: 'harry',
     name: 'Harry',
     emoji: '⚡',
-    avatar: '/src/assets/avatars/harry.svg',
+    avatar: harryAvatar,
     color: '#4CAF50',
     gradient: 'linear-gradient(135deg, #66BB6A, #2E7D32)',
   },
@@ -19,7 +27,7 @@ export const CHARACTERS = {
     id: 'hermione',
     name: 'Hermione',
     emoji: '📚',
-    avatar: '/src/assets/avatars/hermione.svg',
+    avatar: hermioneAvatar,
     color: '#FF7043',
     gradient: 'linear-gradient(135deg, #FF8A65, #D84315)',
   },
@@ -27,7 +35,7 @@ export const CHARACTERS = {
     id: 'ron',
     name: 'Ron',
     emoji: '♟',
-    avatar: '/src/assets/avatars/ron.svg',
+    avatar: ronAvatar,
     color: '#EF5350',
     gradient: 'linear-gradient(135deg, #EF9A9A, #C62828)',
   },
@@ -35,7 +43,7 @@ export const CHARACTERS = {
     id: 'dumbledore',
     name: 'Dumbledore',
     emoji: '🦉',
-    avatar: '/src/assets/avatars/dumbledore.svg',
+    avatar: dumbledoreAvatar,
     color: '#00E5FF',
     gradient: 'linear-gradient(135deg, #18FFFF, #0097A7)',
   },
@@ -43,7 +51,7 @@ export const CHARACTERS = {
     id: 'quirrell',
     name: 'Quirrell',
     emoji: '🐍',
-    avatar: '/src/assets/avatars/quirrell.svg',
+    avatar: quirrellAvatar,
     color: '#AB47BC',
     gradient: 'linear-gradient(135deg, #CE93D8, #6A1B9A)',
   },
@@ -51,7 +59,7 @@ export const CHARACTERS = {
     id: 'hagrid',
     name: 'Hagrid',
     emoji: '🧺',
-    avatar: '/src/assets/avatars/hagrid.svg',
+    avatar: hagridAvatar,
     color: '#8D6E63',
     gradient: 'linear-gradient(135deg, #A1887F, #4E342E)',
   },
